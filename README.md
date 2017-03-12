@@ -1,0 +1,2 @@
+# evernote
+自己的一些evernote备份这个是用Evernote直接导出的，所以在Git上是不能自己阅读的，所有需要导入到Evernote中。
