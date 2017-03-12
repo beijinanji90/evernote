@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020058Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>Python</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>1、数学函数</div>
+<ul>
+<li>1、pow(2,3) 幂运算</li>
+<li>2、abs 绝对值</li>
+<li>3、round(1.0/2.0) 四舍五入最接近的值</li>
+<li>4、floor(2.3) 对给定的值，进行向下取整为某个特定的浮点数</li>
+<li>5、sort(9) 开平方根</li>
+<li>6、ceil()对给定的值，进行向上取整为某个特定的浮点数</li>
+</ul>
+<div>2、获取用户输入</div>
+<div>     &gt;&gt;&gt; x = input(“x:&quot;)</div>
+<div>     &gt;&gt;&gt; y = raw_input(“y”)</div>
+<div>     这两个的区别：</div>
+<ul>
+<li>          1、input希望你输入的是一个完整的表达式，如果你想输入的是字符串，那么你输入的是时候需要把“双引号”也带上。</li>
+<li>          2、raw_input会把所有的输入当做原始数据，然后将其放入到字符串中。</li>
+<li>          3、除非对input有特别的需要，否则尽量使用raw_input函数。</li>
+</ul>
+<div>3、模块</div>
+<div>     &gt;&gt;&gt; from math import sort</div>
+<div>     在使用了”from模块import函数”之后，就可以直接使用该函数，而不用模块名作为前缀调用函数了 </div>
+<div>4、脚本像其他应用程序一样使用</div>
+<div>     如果希望自己的代码在UNIX下顺利执行，那么只要把下面的内容放在脚本的首航即可：</div>
+<div>     #!/usr/bin/env python  (其中/usr/bin/env代表你python安装的目录)</div>
+<div>5、Python中的单引号与双引号的区别?</div>
+<div>     对于单引号和双引号，两个都是可以表示字符串的。</div>
+<div>     &gt;&gt;&gt; “Let’s go!” -&gt; 像这个时候就需要用双引号引起来了，因为里面有一个单引号了，如果这个字符串再用单引号的话，会出错。或者可以在句子中的单引号用\引起来。</div>
+<div>     &gt;&gt;&gt; “Let\’s go!&quot;</div>
+<div>6、拼接字符串，直接用+就可以拼接两个字符串</div>
+<div>     &gt;&gt;x = “Hello”</div>
+<div>     &gt;&gt;y = “World&quot;</div>
+<div>     &gt;&gt;&gt;print x + y</div>
+<div>7、创建字符串</div>
+<ul>
+<li>     1、repr函数</li>
+<li>     2、str函数</li>
+</ul>
+<div>8、对字符串进行转移以及原始字符</div>
+<div>     &gt;&gt;&gt;print “Hello \nWorld” 这个\n会对句子进行换行</div>
+<div>     &gt;&gt;&gt;print r”Hello \nWorld”这个会原样输入，可以看到，原始字符以r开头，可以在原始字符中放入任何字符。</div>
+<div><br/></div>
+<div>9、列表和元组</div>
+<div>     Python中的列表的索引分为两种：</div>
+<div>          1、第一个元素索引为0，接下依次递增</div>
+<div>          2、从元素的最后一个开始，最后一个元素标记为-1，倒数第二个为-2，依次内推，第一个元素位于最开始，索引为0</div>
+<div><br/></div>
+<div>10、locals() BIF会返回当前作用域中定义的所有名的一个集合</div>
+<div><br/></div>
+<div>11、pickle模块中的dump()、load()方法是对对象进行序列化，反序列化</div>
+<div><br/></div>
+<div>12、ord()函数可以获取一个字符的ASCII</div>
+<div>        chr()函数可以把ASCII转为字符</div>
+<div><br/></div>
+<div>13、__dict__:类的属性（包含一个字典。由类的数据属性组成）</div>
+<div>       __doc__:类的文档字符串</div>
+<div>       __name__:类名</div>
+<div>       __module__:类定义所在的模块，（类的全名是_main_.className）.如果类位于导入模块memo中，那么classname._module__等于mymod</div>
+<div><br/></div>
+<div>14、类的私有属性</div>
+<div>        __private_attrs: 两个下划线开头，声明该属性为私有，不能再类外部被使用或直接访问。在类内部的方法中使用self.__private_attrs</div>
+<div>        类的方法：</div>
+<div>        在类的内部，使用def关键字可以为类定义一个方法，与一般函数定义不同，类方法必须包含参数self，且为第一个参数</div>
+<div>         类的私有方法</div>
+<div>          __private_method：两个下划线开头，声明方法为私有方法，不能再类外边调用，在类的内部调用self.__private_methods</div>
+<div><br/></div>
+<div>15、正则表达式</div>
+<div><br/></div>
+<div>match</div>
+<table style="border: 0px; padding: 0px; border-collapse: collapse; color: rgb(51, 51, 51); font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft Yahei', sans-serif; font-size: 12px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<th style="border: 1px solid rgb(85, 85, 85); padding: 3px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(85, 85, 85); vertical-align: top; text-align: left;">参数</th>
+<th style="border: 1px solid rgb(85, 85, 85); padding: 3px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(85, 85, 85); vertical-align: top; text-align: left;">描述</th>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">pattern</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配的正则表达式</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">string</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">要匹配的字符串。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">flags</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">标志位，用于控制正则表达式的匹配方式，如：是否区分大小写，多行匹配等等。</td>
+</tr>
+</table>
+<table style="border: 0px; padding: 0px; border-collapse: collapse; color: rgb(51, 51, 51); font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft Yahei', sans-serif; font-size: 12px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<th style="border: 1px solid rgb(85, 85, 85); padding: 3px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(85, 85, 85); vertical-align: top; text-align: left;">匹配对象方法</th>
+<th style="border: 1px solid rgb(85, 85, 85); padding: 3px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(85, 85, 85); vertical-align: top; text-align: left;">描述</th>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">group(num=0)</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配的整个表达式的字符串，group() 可以一次输入多个组号，在这种情况下它将返回一个包含那些组所对应值的元组。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">groups()</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">返回一个包含所有小组字符串的元组，从 1 到 所含的小组号。</td>
+</tr>
+</table>
+<div><br/></div>
+<div>search</div>
+<table style="border: 0px; padding: 0px; border-collapse: collapse; color: rgb(51, 51, 51); font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft Yahei', sans-serif; font-size: 12px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;width:494px;">
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(85, 85, 85); padding: 3px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(85, 85, 85); vertical-align: top; text-align: left;width:10.121457489878543%;">
+<div><b>参数</b></div>
+</td>
+<th style="border: 1px solid rgb(85, 85, 85); padding: 3px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(85, 85, 85); vertical-align: top; text-align: left;">描述</th>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">pattern</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配的正则表达式</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">string</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">要匹配的字符串。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">flags</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">标志位，用于控制正则表达式的匹配方式，如：是否区分大小写，多行匹配等等。</td>
+</tr>
+</table>
+<div>
+<div style="border: 0px; padding: 0px; font-size: 12px; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div>匹配成功re.search方法返回一个匹配的对象，否则返回None。</div>
+</div>
+<p style="border: 0px; padding: 0px; font-size: 12px; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">我们可以使用group(num) 或 groups() 匹配对象函数来获取匹配表达式。</p>
+</div>
+<table style="border: 0px; padding: 0px; border-collapse: collapse; color: rgb(51, 51, 51); font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft Yahei', sans-serif; font-size: 12px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<th style="border: 1px solid rgb(85, 85, 85); padding: 3px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(85, 85, 85); vertical-align: top; text-align: left;">匹配对象方法</th>
+<th style="border: 1px solid rgb(85, 85, 85); padding: 3px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(85, 85, 85); vertical-align: top; text-align: left;">描述</th>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">group(num=0)</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配的整个表达式的字符串，group() 可以一次输入多个组号，在这种情况下它将返回一个包含那些组所对应值的元组。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">groups()</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">
+<div>返回一个包含所有小组字符串的元组，从 1 到 所含的小组号。</div>
+</td>
+</tr>
+</table>
+<div>     re.match与re.search的区别？</div>
+<div>     re.match只匹配字符串的开始，如果字符串开始不符合正则表达式，则匹配失败，函数返回None：而re.search匹配整个字符串，直到找到一个匹配</div>
+<div><br/></div>
+<div>
+<h2 style="border: 0px; padding: 0px; font-size: 1.8em; color: rgb(51, 51, 51); font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft Yahei', sans-serif; font-style: normal; font-variant-caps: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">正则表达式修饰符 - 可选标志</h2>
+<p style="border: 0px; padding: 0px; font-size: 12px; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">正则表达式可以包含一些可选标志修饰符来控制匹配的模式。修饰符被指定为一个可选的标志。多个标志可以通过按位 OR(|) 它们来指定。如 re.I | re.M 被设置成 I 和 M 标志：</p>
+<table style="border: 0px; padding: 0px; border-collapse: collapse; color: rgb(51, 51, 51); font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft Yahei', sans-serif; font-size: 12px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<th style="border: 1px solid rgb(85, 85, 85); padding: 3px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(85, 85, 85); vertical-align: top; text-align: left;">修饰符</th>
+<th style="border: 1px solid rgb(85, 85, 85); padding: 3px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(85, 85, 85); vertical-align: top; text-align: left;">描述</th>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">re.I</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">使匹配对大小写不敏感</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">re.L</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">做本地化识别（locale-aware）匹配</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">re.M</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">多行匹配，影响 ^ 和 $</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">re.S</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">使 . 匹配包括换行在内的所有字符</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">re.U</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">根据Unicode字符集解析字符。这个标志影响 \w, \W, \b, \B.</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">re.X</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">该标志通过给予你更灵活的格式以便你将正则表达式写得更易于理解。</td>
+</tr>
+</table>
+</div>
+<div>
+<h2 style="border: 0px; padding: 0px; font-size: 1.8em; color: rgb(51, 51, 51); font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft Yahei', sans-serif; font-style: normal; font-variant-caps: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">正则表达式模式</h2>
+<p style="border: 0px; padding: 0px; font-size: 12px; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">模式字符串使用特殊的语法来表示一个正则表达式：</p>
+<p style="border: 0px; padding: 0px; font-size: 12px; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">字母和数字表示他们自身。一个正则表达式模式中的字母和数字匹配同样的字符串。</p>
+<p style="border: 0px; padding: 0px; font-size: 12px; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">多数字母和数字前加一个反斜杠时会拥有不同的含义。</p>
+<p style="border: 0px; padding: 0px; font-size: 12px; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">标点符号只有被转义时才匹配自身，否则它们表示特殊的含义。</p>
+<p style="border: 0px; padding: 0px; font-size: 12px; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">反斜杠本身需要使用反斜杠转义。</p>
+<p style="border: 0px; padding: 0px; font-size: 12px; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">由于正则表达式通常都包含反斜杠，所以你最好使用原始字符串来表示它们。模式元素(如 r'/t'，等价于'//t')匹配相应的特殊字符。</p>
+<p style="border: 0px; padding: 0px; font-size: 12px; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">下表列出了正则表达式模式语法中的特殊元素。如果你使用模式的同时提供了可选的标志参数，某些模式元素的含义会改变。</p>
+<table style="border: 0px; padding: 0px; border-collapse: collapse; color: rgb(51, 51, 51); font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft Yahei', sans-serif; font-size: 12px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<th style="border: 1px solid rgb(85, 85, 85); padding: 3px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(85, 85, 85); vertical-align: top; text-align: left;">模式</th>
+<th style="border: 1px solid rgb(85, 85, 85); padding: 3px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(85, 85, 85); vertical-align: top; text-align: left;">描述</th>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">^</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配字符串的开头</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">$</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配字符串的末尾。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">.</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配任意字符，除了换行符，当re.DOTALL标记被指定时，则可以匹配包括换行符的任意字符。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">[...]</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">用来表示一组字符,单独列出：[amk] 匹配 'a'，'m'或'k'</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">[^...]</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">不在[]中的字符：[^abc] 匹配除了a,b,c之外的字符。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">re*</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配0个或多个的表达式。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">re+</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配1个或多个的表达式。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">re?</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配0个或1个由前面的正则表达式定义的片段，非贪婪方式</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">re{ n}</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;"><br/></td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">re{ n,}</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">精确匹配n个前面表达式。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">re{ n, m}</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配 n 到 m 次由前面的正则表达式定义的片段，贪婪方式</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">a| b</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配a或b</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">(re)</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">G匹配括号内的表达式，也表示一个组</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">(?imx)</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">正则表达式包含三种可选标志：i, m, 或 x 。只影响括号中的区域。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">(?-imx)</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">正则表达式关闭 i, m, 或 x 可选标志。只影响括号中的区域。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">(?: re)</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">类似 (...), 但是不表示一个组</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">(?imx: re)</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">在括号中使用i, m, 或 x 可选标志</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">(?-imx: re)</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">在括号中不使用i, m, 或 x 可选标志</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">(?#...)</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">注释.</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">(?= re)</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">前向肯定界定符。如果所含正则表达式，以 ... 表示，在当前位置成功匹配时成功，否则失败。但一旦所含表达式已经尝试，匹配引擎根本没有提高；模式的剩余部分还要尝试界定符的右边。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">(?! re)</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">前向否定界定符。与肯定界定符相反；当所含表达式不能在字符串当前位置匹配时成功</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">(?&gt; re)</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配的独立模式，省去回溯。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\w</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配字母数字及下划线</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\W</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配非字母数字及下划线</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\s</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配任意空白字符，等价于 [\t\n\r\f].</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\S</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配任意非空字符</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\d</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配任意数字，等价于 [0-9].</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\D</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配任意非数字</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\A</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配字符串开始</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\Z</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配字符串结束，如果是存在换行，只匹配到换行前的结束字符串。c</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\z</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配字符串结束</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\G</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配最后匹配完成的位置。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\b</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配一个单词边界，也就是指单词和空格间的位置。例如， 'er\b' 可以匹配&quot;never&quot; 中的 'er'，但不能匹配 &quot;verb&quot; 中的 'er'。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\B</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配非单词边界。'er\B' 能匹配 &quot;verb&quot; 中的 'er'，但不能匹配 &quot;never&quot; 中的 'er'。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\n, \t, 等.</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配一个换行符。匹配一个制表符。等</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(246, 244, 240);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\1...\9</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配第n个分组的子表达式。</td>
+</tr>
+<tr style="border: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">\10</td>
+<td style="border: 1px solid rgb(212, 212, 212); padding: 7px 5px; font-size: 1em; vertical-align: top;">匹配第n个分组的子表达式，如果它经匹配。否则指的是八进制字符码的表达式。</td>
+</tr>
+</table>
+</div>
+</en-note>
+]]></content><created>20160508T150511Z</created><updated>20160820T091110Z</updated><note-attributes><latitude>40.03093409999999</latitude><longitude>116.53525676</longitude><altitude>47</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

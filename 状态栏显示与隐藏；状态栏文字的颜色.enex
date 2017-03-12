@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020424Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>状态栏显示与隐藏；状态栏文字的颜色</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>1、修改状态栏文字颜色。两种方法：（<a href="http://motzcod.es/post/110755300272/ios-tip-change-status-bar-icon-text-colors">http://motzcod.es/post/110755300272/ios-tip-change-status-bar-icon-text-colors</a>）</div>
+<div>     a、在info-plist中设置View Controller-based status bar appearance 设为NO；statusBarStyle为UIStatusBarStyleLightContent</div>
+<div>     b、在info-plist中设置View Controller-based status bar appearance 设为YES；然后再BASE控制器中设置NavightionController.NavigationBar.BarStyle = UIBarStyle.Black;（相当于，状态栏的颜色根据导航栏的颜色为依据设置）。</div>
+<div>2、在info-plist文件中，View controller-based status bar appearance项设为YES，则ViewController对status bar的设置优先级高于application的设置。为NO则以application的设置为准，view controller的preferStatusBarHidden方法无效，是根本不会调用的。</div>
+<div>     （<a href="http://blog.csdn.net/yongyinmg/article/details/39928367">http://blog.csdn.net/yongyinmg/article/details/39928367</a>）</div>
+</en-note>
+]]></content><created>20150929T101250Z</created><updated>20150929T102442Z</updated><note-attributes><latitude>39.97563941142729</latitude><longitude>116.4892178155924</longitude><altitude>39.38656616210938</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

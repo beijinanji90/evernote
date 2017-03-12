@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020116Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>xocde的version与build的区别</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div><span style="font-family: 'Courier New';">1、version与build所对应的plist文件的什么字段？</span></div>
+<ul>
+<li>      <span style="font-family: 'Courier New';">version -&gt; CFBundleShortVersionString 标识应用程序的发布版本号。</span></li>
+<li><span style="font-family: 'Courier New';">   该标志表示就是应该的版本号，一般是三个整数分隔组成的字符串。第一个整数代表重大修改的版本，如实现新的功能或重大变化的修订。第二个整数表示的修改，实现比较突出的特点。第三个整数代表维护版本。</span></li>
+<li><span style="font-family: 'Courier New';">    build -&gt; CFBundleVersion标识应用的内部版本</span></li>
+<li><span style="font-family: 'Courier New';">    这个版本是内部自己团队使用的一个版本号，一般不对外公开。</span></li>
+</ul>
+<div><span style="font-family: 'Courier New';">2、AppStore发布</span></div>
+<div><span style="font-family: 'Courier New';">   每发布一个新应用的或新的版本，苹果都要求你输入一个版本号，这个版本号对应的是CFBundleShortVersionString，如果你上传成功后（未审核，或未通过），然后又修复了Bug,或改了功能，那么在打包发布时，CFBundleVersion必须比上一个版本更大。</span></div>
+<div><span style="font-family: 'Courier New';">   打个比方，我第一次上传的Version:1.5.1、Build:3.4.2 ,那我这个应用被拒绝，修复好后，我又打包上传时，Version还是1.5.1，但Build必须大于3.4.2，可以是3.4.3 、3.4.5、3.8.5等。 如果Version 1.5.1通过审核后，又发新版本，那个下次上传时，Version要大于1.5.1，但Build可以从新开始，比如1.1.0 。如果Version1.5.1又有问题，我又要上传修改后的应用时，Build必须大于上一个上传成功的Build，即要大于1.1.0。</span></div>
+</en-note>
+]]></content><created>20151029T065244Z</created><updated>20160718T021017Z</updated><note-attributes><latitude>39.97558220673429</latitude><longitude>116.4891976851106</longitude><altitude>38.31912612915039</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

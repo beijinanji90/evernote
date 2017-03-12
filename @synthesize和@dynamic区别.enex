@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T015954Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>@synthesize和@dynamic区别</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>在声明proper属性后，有2种实现选择</div>
+<div>@synthesize</div>
+<div>编译期间，然编译器自动生成getter/setter方法</div>
+<div>当有自定义的存或取方法时，自定义会屏蔽自动生成该方法</div>
+<div><br/></div>
+<div>@dynamic</div>
+<div>告诉编译器，不自动生成getter/setter方法，避免编译期间产生警告</div>
+<div>然后有自己实现存取方法</div>
+<div><br/></div>
+<div><br/></div>
+<div>@protocal（协议）中可以添加属性，但是继承这个协议的类，在使用的时候需要使用@synthesize告诉编译器生成getter/setter方法</div>
+<div><br/></div>
+<div>@category（分类）中原本是不可以添加属性，但是只能使用@dynamic，然后使用getter/setter方法</div>
+<div>- (void)setCategoryName:(NSString *) categoryName</div>
+<div>{</div>
+<div>     objc_setAssociatedObject(self,@“_categoryName”,categoryName,OBJC_ASSOCIATION_COPY_NONATOMIC);</div>
+<div>}</div>
+<div>- (NSString *)categoryName</div>
+<div>{</div>
+<div>     return objc_getAssociatedObject(self,@“)categoryName”);</div>
+<div>}</div>
+<div><span style="font-family: Monaco;"><span style="color: rgb(244, 244, 244);">}</span></span></div>
+</en-note>
+]]></content><created>20160913T074319Z</created><updated>20161010T095403Z</updated><note-attributes><latitude>39.97566504795592</latitude><longitude>116.489203469997</longitude><altitude>36.29841995239258</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020446Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>Core Text</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div><br/></div>
+<div style="padding: 0px; border: 0px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: inherit; vertical-align: baseline; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 1px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">
+<div><a href="http://geeklu.com/2013/03/core-text/">http://geeklu.com/2013/03/core-text/</a></div>
+<div><br/></div>
+<div><span style="font-size: 16px;"><span style="font-family: MuseoSans, Trebuchet, 'Trebuchet MS', Tahoma, 'Lucida Grande', 'Lucida Sans Unicode', 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei', Verdana, sans-serif;">下面讨论的Core Text相关编程都是特指在iOS平台下。 Core Text是和Core Graphics配合使用的，一般是在UIView的drawRect方法中的Graphics Context上进行绘制的。 且Core Text真正负责绘制的是文本部分，图片还是需要自己去手动绘制，所以你必须关注很多绘制的细节部分。</span></span></div>
+</div>
+<div><br/></div>
+<div style="padding: 0px; border: 0px; font-style: normal; font-variant: normal; font-weight: inherit; font-stretch: inherit; vertical-align: baseline; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 1px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">
+<div><span style="font-size: 18px;"><span style="font-family: MuseoSans, Trebuchet, 'Trebuchet MS', Tahoma, 'Lucida Grande', 'Lucida Sans Unicode', 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei', Verdana, sans-serif;">一.Core Text知识准备</span></span></div>
+</div>
+<div style="padding: 0px; border: 0px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: inherit; vertical-align: baseline; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 1px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">
+<div><span style="font-size: 16px;"><span style="font-family: MuseoSans, Trebuchet, 'Trebuchet MS', Tahoma, 'Lucida Grande', 'Lucida Sans Unicode', 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei', Verdana, sans-serif;">在进入任何一个新的编程领域之前，我们肯定要先接触相关的领域模型的知识。比如你软件是进行科学计算的，那么你就必须理解大量的数学原理；如果你的软件是搞银行系统，那么你就得事先了解相关的银行的业务知识。这些都是不可避免的事情。通常情况下领域知识具有较高的通用性。但在特定的环境下，某些知识点也会被特殊处理。 Core Text是用来进行文字精细排版的，所以了解文字相关的知识也不可避免。</span></span></div>
+<div><span style="font-size: 16px;"><span style="font-family: MuseoSans, Trebuchet, 'Trebuchet MS', Tahoma, 'Lucida Grande', 'Lucida Sans Unicode', 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei', Verdana, sans-serif;"><br/></span></span></div>
+</div>
+<div style="padding: 0px; border: 0px; font-style: normal; font-variant: normal; font-weight: inherit; font-stretch: inherit; vertical-align: baseline; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 1px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">
+<div><span style="font-size: 16px;"><span style="font-family: MuseoSans, Trebuchet, 'Trebuchet MS', Tahoma, 'Lucida Grande', 'Lucida Sans Unicode', 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei', Verdana, sans-serif;">1.字符（Character）和字形（Glyphs）</span></span></div>
+</div>
+<div style="padding: 0px; border: 0px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: inherit; vertical-align: baseline; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 1px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">
+<div><span style="font-size: 16px;"><span style="font-family: MuseoSans, Trebuchet, 'Trebuchet MS', Tahoma, 'Lucida Grande', 'Lucida Sans Unicode', 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei', Verdana, sans-serif;">排版系统中文本显示的一个重要的过程就是字符到字形的转换，字符是信息本身的元素，而字形是字符的图形表征，字符还会有其它表征比如发音。 字符在计算机中其实就是一个编码，某个字符集中的编码，比如Unicode字符集，就囊括了大都数存在的字符。 而字形则是图形，一般都存储在字体文件中，字形也有它的编码，也就是它在字体中的索引。 一个字符可以对应多个字形（不同的字体，或者同种字体的不同样式:粗体斜体等）；多个字符也可能对应一个字形，比如字符的连写（ Ligatures）。</span></span></div>
+<div><en-media style="height: auto;" type="image/gif" hash="2c57cfd169c7bb1f13c7e3b4037d1aa2"/></div>
+<div>Roman Ligatures</div>
+<div><br/></div>
+<div style="text-align: center"><br/></div>
+<div><en-media style="height: auto;" type="image/gif" hash="14f5a779957b255b9cf127d7ee6bde4c"/></div>
+<div><br/></div>
+<div><en-media style="height: auto;" type="image/gif" hash="7812f0cc545fcb7de8a31a8bae1bc98d"/></div>
+<div><br/></div>
+<ul style="padding: 0px 0px 0px 12px; border: 0px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: inherit; font-size: 16px; font-family: MuseoSans, Trebuchet, 'Trebuchet MS', Tahoma, 'Lucida Grande', 'Lucida Sans Unicode', 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei', Verdana, sans-serif; vertical-align: baseline; list-style: square; color: rgb(0, 0, 0); letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 1px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">
+<li style="padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; font-family: inherit; vertical-align: baseline;">bounding box（边界框 bbox），这是一个假想的框子，它尽可能紧密的装入字形。</li>
+<li style="padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; font-family: inherit; vertical-align: baseline;">baseline（基线），一条假想的线,一行上的字形都以此线作为上下位置的参考，在这条线的左侧存在一个点叫做基线的原点，</li>
+<li style="padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; font-family: inherit; vertical-align: baseline;">ascent（上行高度）从原点到字体中最高（这里的高深都是以基线为参照线的）的字形的顶部的距离，ascent是一个正值</li>
+<li style="padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; font-family: inherit; vertical-align: baseline;">descent（下行高度）从原点到字体中最深的字形底部的距离，descent是一个负值（比如一个字体原点到最深的字形的底部的距离为2，那么descent就为-2）</li>
+<li style="padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; font-family: inherit; vertical-align: baseline;">linegap（行距），linegap也可以称作leading（其实准确点讲应该叫做External leading）,行高lineHeight则可以通过 ascent + |descent| + linegap 来计算。</li>
+</ul>
+<div style="padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; font-family: inherit; vertical-align: baseline;">
+<div><br/></div>
+<div>UIFont Metrics:</div>
+<div>     PointSize属性：</div>
+<div>     ascender属性：基准线以上的最高y坐标</div>
+<div>     descender属性：基准线以下的最低y坐标</div>
+<div>     capHeight属性：The receiver’s cap height information接收者的大写高度信息？</div>
+<div>     xHeight属性：返回小写x的高度</div>
+<div>     lineHeight属性：文本行的高度</div>
+<div>获得系统字体的信息：</div>
+<div>     +labelFontSize:</div>
+<div>     +buttonFontSize:</div>
+<div>     +smallSystemFontSize:</div>
+<div>     +systemFontSize</div>
+</div>
+</div>
+</en-note>
+]]></content><created>20150908T035520Z</created><updated>20150908T071712Z</updated><note-attributes><latitude>39.97567739966926</latitude><longitude>116.4892001017113</longitude><altitude>38.52074813842773</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes><resource><data encoding="base64">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
+c1Ir47HhILJ9BpM5mUBeRal55K0QBAA7</data><mime>image/gif</mime><width>303</width><height>205</height><duration>0</duration><recognition><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE recoIndex PUBLIC "SYSTEM" "http://xml.evernote.com/pub/recoIndex.dtd">
+<recoIndex docType="unknown" objType="image" objID="14f5a779957b255b9cf127d7ee6bde4c" engineVersion="6.5.17.7" recoType="service" lang="zh" objWidth="303" objHeight="205"><item x="217" y="21" w="39" h="9"><t w="53">Boundio,</t><t w="51">bounding</t><t w="50">Boundini</t><t w="46">Bodmin癌</t><t w="46">Bodmin 0</t><t w="44">Boundin日</t><t w="44">Boman癌</t><t w="43">Boman 0</t><t w="43">bound im</t><t w="43">bound IN癌</t></item><item x="15" y="56" w="29" h="7"><t w="53">ascent</t><t w="46">As cent</t><t w="46">儿scenl ?</t><t w="44">As CG nl</t><t w="44">ASCOfll</t><t w="44">As CG NT</t><t w="43">角scent</t><t w="43">As cen ?</t><t w="43">As CG qi</t><t w="43">禽scent</t></item><item x="0" y="104" w="16" h="8"><t w="75">Left</t><t w="46">Leh</t><t w="38">Le倩</t><t w="37">Le氣</t><t w="37">Le篤</t><t w="37">Le竹</t><t w="29">據嚎倩</t><t w="29">據嚎氣</t><t w="28">七嚎倩</t></item><item x="19" y="105" w="7" h="7"><t w="36">s</t><t w="19">$</t><t w="13">一$回</t><t w="13">一彗回</t><t w="13">一5回</t><t w="13">一$附</t><t w="13">一彗附</t><t w="13">- $回</t><t w="13">-彗回</t></item><item x="32" y="105" w="7" h="7"><t w="23">e</t></item><item x="5" y="116" w="32" h="8"><t w="55">ng</t><t w="53">Dearing</t><t w="52">bearing</t><t w="46">薔earing</t><t w="45">蔔earing</t><t w="44">。 earing</t><t w="40">dG Arin曹</t><t w="39">dG Arin瘟</t></item><item x="49" y="118" w="16" h="14"><t w="27">ia</t><t w="25">la</t><t w="22">-紙</t><t w="22">-綸</t><t w="22">-給</t><t w="21">-朧</t><t w="18">,紙</t><t w="18">,綸</t><t w="18">,給</t><t w="17">,朧</t></item><item x="222" y="113" w="10" h="9"><t w="44">同</t><t w="43">阳</t><t w="34">阿</t><t w="34">向</t><t w="34">間</t><t w="33">問</t><t w="33">附</t><t w="32">町</t></item><item x="231" y="114" w="24" h="10"><t w="62">ght</t><t w="53">Rights</t><t w="40">Rig何ts</t><t w="32">Rioht $</t><t w="32">Rioht彗</t><t w="31">Rioht 5</t><t w="27">日Ig hi一$</t><t w="27">日Ig hi一彗</t><t w="27">日Ig hi一5</t></item><item x="248" y="114" w="19" h="8"><t w="57">side</t><t w="27">崙</t><t w="25">還</t></item><item x="270" y="113" w="33" h="11"><t w="71">bearing</t><t w="54">包earing</t><t w="54">bearin自</t><t w="53">牠bearing</t><t w="53">忿bearing</t><t w="53">兮bearing</t><t w="53">嫖bearing</t><t w="52">已earing</t><t w="40">牠bearin且</t><t w="40">牠bearin目</t></item><item x="219" y="133" w="39" h="7"><t w="50">Ad,ance</t><t w="45">Ad0愚nce</t><t w="44">adv ani洶</t><t w="44">adv ani海</t><t w="44">adv ani瑋</t><t w="44">adv ani鐸</t><t w="43">adv ANR洶</t><t w="43">adv ANR海</t><t w="43">adv ANR瑋</t><t w="42">adv ANR鐸</t></item><item x="260" y="133" w="23" h="8"><t w="65">width</t><t w="42">回idth</t><t w="40">潤idth</t><t w="35">IM樹片</t><t w="35">IM樹薔</t><t w="35">IM祺片</t><t w="35">IM戲片</t><t w="35">IM樹腐</t><t w="35">IM祺腐</t><t w="35">IM戲腐</t></item><item x="104" y="142" w="15" h="6"><t w="41">bag</t><t w="33">gag</t><t w="33">目AG</t><t w="32">日AG</t><t w="31">瘟AG</t><t w="30">目ae</t><t w="29">日ae</t><t w="29">BA晝</t><t w="28">瘟ae</t><t w="28">目諜</t></item><item x="119" y="143" w="5" h="5"><t w="31">磨</t><t w="30">繪</t><t w="30">溼</t><t w="29">獲</t></item><item x="9" y="150" w="36" h="8"><t w="65">Descent</t><t w="52">口escent</t><t w="47">口舍scent</t><t w="43">口。scent</t><t w="42">口</t><t w="40">白</t><t w="38">曰</t><t w="37">臼</t></item><item x="44" y="194" w="44" h="11"><t w="59">•=Origin</t><t w="53">o口gin</t><t w="49">Ongin</t><t w="49">。= Origin</t><t w="48">口ngin</t><t w="46">Ong in</t><t w="45">口口gin</t><t w="43">口ng in</t><t w="40">Ongi in</t></item></recoIndex>]]></recognition><resource-attributes><timestamp>19700101T000000Z</timestamp><reco-type>unknown</reco-type><file-name>65cc0af7jw1e2ucdlrkfbg.gif</file-name></resource-attributes></resource><resource><data encoding="base64">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
+DaOFQwLoQ10vbVcWIQAAOw==</data><mime>image/gif</mime><width>133</width><height>124</height><duration>0</duration><recognition><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE recoIndex PUBLIC "SYSTEM" "http://xml.evernote.com/pub/recoIndex.dtd">
+<recoIndex docType="unknown" objType="image" objID="2c57cfd169c7bb1f13c7e3b4037d1aa2" engineVersion="6.5.17.7" recoType="service" lang="zh" objWidth="133" objHeight="124"><item x="0" y="0" w="118" h="51"><t w="58">J＋／＝</t><t w="48">J＋／~jl</t><t w="39">fl二丑</t><t w="39">FI二丑</t><t w="38">FI辛丑</t><t w="38">fl辛丑</t><t w="37">FI =丑</t><t w="37">fl =丑</t></item><item x="47" y="70" w="86" h="54"><t w="73">f=ff</t><t w="41">fi=ff</t><t w="28">ft所</t><t w="27">ft不厅</t><t w="27">ft广二厅</t><t w="27">ft不井</t><t w="26">ft广二井</t><t w="26">ft广=厅</t><t w="26">ft尸二厅</t></item></recoIndex>]]></recognition><resource-attributes><timestamp>19700101T000000Z</timestamp><reco-type>unknown</reco-type><file-name>65cc0af7gw1e2u5ypr899g.gif</file-name></resource-attributes></resource><resource><data encoding="base64">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
+bYEAADs=</data><mime>image/gif</mime><width>506</width><height>274</height><duration>0</duration><recognition><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE recoIndex PUBLIC "SYSTEM" "http://xml.evernote.com/pub/recoIndex.dtd">
+<recoIndex docType="unknown" objType="image" objID="7812f0cc545fcb7de8a31a8bae1bc98d" engineVersion="6.5.17.7" recoType="service" lang="zh" objWidth="506" objHeight="274"><item x="173" y="2" w="40" h="8"><t w="59">bounding</t><t w="52">Bouno;nc</t><t w="52">Bou no ;nc</t><t w="48">bound IN售</t><t w="48">bound IN自</t><t w="48">bound IN目</t><t w="47">Bouldin售</t><t w="47">Bouldin自</t><t w="47">Bouldin目</t><t w="47">bound 」 ng</t></item><item x="334" y="2" w="19" h="8"><t w="58">italic</t><t w="56">1ta1;c</t><t w="52">1ta1;,</t><t w="44">1tal ;已</t><t w="43">1tal ;巳</t><t w="41">1taI ;已</t><t w="41">1taI ;巳</t><t w="35">1tal ;,</t><t w="33">1taI ;,</t><t w="29">tal ;已</t></item><item x="357" y="2" w="23" h="8"><t w="64">angle</t><t w="41">Ami蘊</t><t w="41">Ami瘤</t><t w="41">Ami繪</t><t w="40">AML蘊</t><t w="40">Ami搪</t><t w="40">AML瘤</t><t w="40">AML繪</t><t w="39">AML搪</t><t w="37">日呵＂</t></item><item x="135" y="14" w="40" h="57"><t w="30">『－t</t></item><item x="173" y="13" w="39" h="9"><t w="65">rectangle</t><t w="47">「ectangle</t><t w="44">retangle</t><t w="42">recangle</t><t w="37">re樹8聰Le</t><t w="37">re樹8嗨Le</t><t w="37">re樹8呎Le</t><t w="37">re樹8嗎Le</t><t w="37">re樹摺聰Le</t><t w="37">re樹摺嗨Le</t></item><item x="0" y="150" w="19" h="9"><t w="69">Line</t><t w="51">Une</t><t w="43">Lin臼</t><t w="43">Lin甦</t><t w="41">LI NE</t><t w="41">七ine</t><t w="39">妆ine</t><t w="35">LI日甦</t><t w="35">LI日臼</t><t w="35">LI角甦</t></item><item x="0" y="161" w="27" h="11"><t w="54">heigh!</t><t w="47">Heim</t><t w="47">hePghl 」</t><t w="47">hePghl 1</t><t w="46">height</t><t w="42">Heim 」</t><t w="42">Heim 1</t><t w="42">hePghI 」</t><t w="42">hePghI 1</t><t w="42">helm</t></item><item x="41" y="219" w="6" h="7"><t w="69">口</t><t w="65">白</t><t w="62">曰</t><t w="61">臼</t><t w="50">D</t><t w="26">0</t><t w="26">應</t></item><item x="100" y="261" w="38" h="6"><t w="41">adv and目</t><t w="41">adv ANC目</t><t w="41">advance</t><t w="41">adv ANC白</t><t w="41">adv and白</t><t w="40">adv and曹</t><t w="40">adv ANC曹</t><t w="40">adv and蘊</t><t w="40">adv ANC蘊</t><t w="40">adv 2nd目</t></item><item x="107" y="180" w="25" h="9"><t w="55">Ongi”</t><t w="47">Ongin</t><t w="47">口口gin</t><t w="46">口ngin</t><t w="44">On臼in</t><t w="39">OHG in</t><t w="39">oh gin</t><t w="38">origin</t><t w="36">0口gin</t><t w="36">oh瑕in</t></item><item x="152" y="261" w="8" h="6"><t w="32">叫」</t><t w="32">nl</t><t w="29">州」</t><t w="29">趙</t><t w="29">瀟」</t><t w="28">貧」</t><t w="28">胡</t><t w="28">襯</t><t w="25">削」</t><t w="21">川」</t></item><item x="463" y="125" w="19" h="11"><t w="56">巳a。</t><t w="51">Caρ</t><t w="47">Cao</t><t w="43">cap</t><t w="34">Ca。</t><t w="33">Ca9</t><t w="32">ca日</t><t w="32">ca角</t><t w="31">ca負</t><t w="29">Ca0</t></item><item x="16" y="24" w="487" h="247"><t w="30">「了命一</t><t w="29">「了命華</t><t w="29">「了命济</t><t w="29">「了命-</t><t w="28">「 7命一</t><t w="28">「 7命華</t><t w="28">「谛曇一</t><t w="28">「谛曇華</t><t w="28">「 7命-</t><t w="28">「 7命济</t></item><item x="47" y="121" w="29" h="7"><t w="56">ascent</t><t w="48">Ascenl ?</t><t w="47">A,cent</t><t w="45">两scent</t><t w="45">灣scent</t><t w="45">八scent</t><t w="45">Ascen1 ?</t><t w="45">禽scent</t><t w="42">As口en1 ?</t><t w="41">As巳en1 ?</t></item><item x="48" y="220" w="28" h="6"><t w="37">會semi</t><t w="37">槃CMI</t><t w="36">色semi</t><t w="36">詹semi</t><t w="36">倉semi</t><t w="36">酶CMI</t><t w="35">槃CML</t><t w="35">雛CMI</t><t w="35">帷CMI</t><t w="35">會富CMI</t></item><item x="139" y="262" w="8" h="5"><t w="28">瑄</t><t w="26">滲</t><t w="25">贓</t></item><item x="147" y="262" w="4" h="5"><t w="31">目</t><t w="29">白</t><t w="29">蘊</t><t w="28">曹</t></item><item x="411" y="148" w="7" h="7"><t w="54">x</t><t w="30">買-</t><t w="29">涛-</t><t w="29">買一</t><t w="29">漆</t><t w="29">涛一</t><t w="28">梵-</t><t w="28">噱-</t><t w="28">梵一</t><t w="27">噱一</t></item><item x="420" y="148" w="11" h="8"><t w="77">he</t><t w="26">崗摩</t><t w="25">蔔摩</t></item><item x="425" y="227" w="36" h="8"><t w="55">baseline</t><t w="48">Baselin,</t><t w="48">Baselin包</t><t w="48">Base1in包</t><t w="47">Base1in,</t><t w="47">Baseli盯但</t><t w="47">Basel ine</t><t w="45">Basel轟想</t><t w="45">Basel南想</t><t w="45">Basel轟思</t></item><item x="431" y="148" w="7" h="9"><t w="29">淳</t><t w="27">菊</t><t w="26">町</t><t w="26">尊</t><t w="24">啕</t></item><item x="439" y="148" w="7" h="8"><t w="51">hI !</t><t w="41">HI</t><t w="39">hl !</t><t w="37">HL</t><t w="36">h1 !</t><t w="27">擋!</t><t w="26">惰!</t><t w="26">薔!</t><t w="26">椅!</t></item><item x="463" y="137" w="27" h="10"><t w="53">heigh!</t><t w="47">neigh 」</t><t w="47">neigh 1</t><t w="46">Heim 」</t><t w="45">height</t><t w="44">Heim 1</t><t w="40">he咆h! 」</t><t w="40">he祖M</t><t w="40">he咆h! 1</t><t w="40">he Ig HI</t></item><item x="160" y="102" w="55" h="98"><t w="54">Il</t><t w="52">II</t><t w="46">11</t><t w="23">LI</t></item><item x="239" y="102" w="148" h="98"><t w="21">u1r,</t><t w="19">獸LI香</t><t w="19">獸IL香</t><t w="19">獸」 「香</t><t w="19">獸LI奮</t><t w="19">獸IL奮</t><t w="19">獸II香</t><t w="19">獸」 「奮</t><t w="19">獸LI疊</t><t w="19">獸IL疊</t></item><item x="323" y="256" w="18" h="10"><t w="51">line</t><t w="48">Une</t><t w="44">Lin史</t><t w="44">Lin娘</t><t w="44">Lin谒</t><t w="39">LI ne</t><t w="38">LI畴</t><t w="37">七ine</t><t w="37">叫</t><t w="37">LI日史</t></item><item x="343" y="258" w="16" h="7"><t w="68">gap</t><t w="35">盪ap</t><t w="33">屌ap</t><t w="33">嚕ap</t><t w="32">噜ap</t><t w="29">包ap</t><t w="29">钮ap</t><t w="24">盪碩?</t><t w="24">盪聶?</t><t w="22">屌碩?</t></item><item x="363" y="256" w="24" h="9"><t w="44">ile襯</t><t w="43">ile認</t><t w="42">ile酵</t><t w="42">ile誡</t><t w="34">甜</t><t w="34">il ?襯</t><t w="33">il ?認</t><t w="33">il ?酵</t><t w="33">il ?誡</t><t w="26">耐</t></item><item x="387" y="248" w="23" h="23"><t w="38">ng) !</t><t w="38">no) !</t><t w="36">IN 9 Ji</t><t w="36">IN 9 LI</t><t w="36">IN專Ji</t><t w="36">IN專LI</t><t w="36">IN爭Ji</t><t w="36">IN爭LI</t><t w="36">IN枣Ji</t><t w="36">IN枣LI</t></item></recoIndex>]]></recognition><resource-attributes><timestamp>19700101T000000Z</timestamp><reco-type>unknown</reco-type><file-name>65cc0af7gw1e2u242uytyg.gif</file-name></resource-attributes></resource></note>
+</en-export>

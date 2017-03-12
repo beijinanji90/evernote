@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020107Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>iOS奇葩bug</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>1、ios8中，如果设置了backgroundColor，有的时候会莫名其妙的多出了一条线</div>
+</en-note>
+]]></content><created>20160805T034129Z</created><updated>20160805T034226Z</updated><note-attributes><latitude>39.97564860554412</latitude><longitude>116.4892320461851</longitude><altitude>38.79745483398438</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

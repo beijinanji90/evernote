@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020557Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>ios技巧与经验</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">1、如果UITableViewCell只是展示大图片时，要记住把它的 <span style="font-size: 14px; font-family: Menlo; color: rgb(0, 175, 202);">userInteractionEnabled = no。</span>
+<div><span style="font-size: 14px; font-family: Menlo;"><font color="#00AFCA">   </font><font color="#22252C">如果不设置的话，在点击cell时，内存会暴涨</font></span></div>
+<div><span style="font-size: 14px; font-family: Menlo;"><font color="#22252C">2、</font></span><span style="font-size: 14px; font-family: Menlo; color: rgb(255, 255, 255);">[</span><span style="font-size: 14px; font-family: Menlo;">UIPasteboard</span><span style="font-size: 14px; font-family: Menlo;">generalPasteboard</span><span style="font-size: 14px; font-family: Menlo;">].</span><font face="Menlo"><span style="font-size: 14px;">string = @“” 剪贴板</span></font></div>
+<div><font face="Menlo"><span style="font-size: 14px;">3、如果编译显示不支持arm64,在Target-&gt;Build Settings-&gt;Valid Architectures 去掉arm64一项。然后在Build Active Architecture Only 设置为no</span></font></div>
+<div><font face="Menlo"><span style="font-size: 14px;">4、如果设置status bar style设置为</span></font><span style="color: rgb(0, 175, 202); font-family: Menlo; font-size: 14px;">UIStatusBarStyleBlackOpaque，</span><span style="font-family: Menlo; font-size: 14px;"><font color="#373737">那么转改蓝的颜色就不受导航栏的影响了</font></span></div>
+<div><span style="font-family: Menlo; font-size: 14px;"><font color="#373737">5、ios7引影响：</font></span></div>
+<div><span style="font-family: Menlo; font-size: 14px;"><font color="#373737">     1、edgetsForExtentdedLayout:这个属性属于UIExtendedEdge类型，它可以单独指定矩形的四条边，也可以单独指定、指定全部、全部不指定</font></span></div>
+<div><span style="font-family: Menlo; font-size: 14px;"><font color="#373737">     2、extendedLayoutIncludesOpaqueBars:如果使用了不透明的操作栏，设置edgesForExtendedLayout的时候也要将etendedLayoutIncludesOpaqueBars的值也设置为NO(默认为YES)</font></span></div>
+<div><span style="font-family: Menlo; font-size: 14px;"><font color="#373737">     3、automaticallyAdjustsScrollViewInstes:如果不想scrollView的内容自动调整，将这个属性设为NO（默认为YES）</font></span></div>
+<div><span style="font-family: Menlo; font-size: 14px;"><font color="#373737">6、edgesForExtendLayout,这个属性是UIExtendedEdge类型，用来指定视图那条边需要扩展，比如UIRectEdgeTop,它把视图区域顶部扩展到statusBar(以前是navigationBar下面)；UIRectEdgeBottom把区域顶部扩展到屏幕下方边缘，默认值是UIRectEgeAll</font></span></div>
+<div><span style="font-family: Menlo; font-size: 14px;"><font color="#373737">7、automaticallyAdjustsScrollViewInsets，为Yes时，它会找view里的scrollView,并设置scrollView的contentInset为{64，0，0，0}。</font></span></div>
+<div><span style="font-family: Menlo; font-size: 14px;"><font color="#373737">8、ios7中允许控制器在app运行过程中改变系统状态栏的样式。开启这个功能，需要在Info.plist文件中添加键UIViewControllerBasedStatusBarAppearance设置为YES。改变状态栏的一个好方法是重写preferedStatusBarStyle方法，用一个动画模块来更新状态栏外观，并调用setNeedsStatusBarAppearanceUpdate方法。</font></span></div>
+<div><span style="font-family: Menlo; font-size: 14px;"><font color="#373737">9、使用着色（Tint Color），在IOS7中，着色是UIView的一个属性。当你指定某个视图的着色的时候，这个颜色会 自动继承到所有的子视图中，因为UIWindows继承自UIView,可以这样设置窗体的着色属性来指定着色：window.tintColor = [UIColor redColor]</font></span></div>
+<div><font color="#373737" face="Menlo"><span style="font-size: 14px;">10、在ios6中，tintColor可以用来给导航栏的背景着色、tab栏、工具栏、搜索栏、搜索栏的范围选择栏着色。而在ios7中给背景着色只需要使用barTintColor属性就可以</span></font></div>
+<div><font color="#373737" face="Menlo"><span style="font-size: 14px;">11、UITableViewCellStyle</span></font></div>
+<div><font color="#373737" face="Menlo"><span style="font-size: 14px;">    UITableViewCellSeparatorStyle</span></font></div>
+<div><font color="#373737" face="Menlo"><span style="font-size: 14px;">    UITableViewCellSelectionStyle</span></font></div>
+<div><font color="#373737" face="Menlo"><span style="font-size: 14px;">    UITableViewCellEditingStyle</span></font></div>
+<div><font color="#373737" face="Menlo"><span style="font-size: 14px;">    UITableVIewCellAccessoryType</span></font></div>
+<div><font color="#373737" face="Menlo"><span style="font-size: 14px;">    UITableViewCellStateMask</span></font></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(55, 55, 55);">12、UITableView的<span style="color: rgb(237, 42, 70);">HeaderView<span style="color: rgb(17, 7, 34);">与</span>SectionView的区别？</span></span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(237, 42, 70);">    <span style="color: rgb(14, 4, 24);">在HeaderView直接创建view的时候自己设置</span></span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(237, 42, 70);"><span style="color: rgb(14, 4, 24);">    SectionView的高度需要在代理方法设置，如果需要SectionView的高度为0，需要在创建UITableView时，修改它的默认sectionView的高度</span></span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(14, 4, 24);">13、UITableViewCell的</span><span style="color: rgb(255, 50, 48);">backgroundView</span><span style="color: rgb(14, 4, 24);">,</span><span style="color: rgb(255, 47, 65);">selectBackGroungView</span><span style="color: rgb(14, 4, 24);">?    </span></span></span></div>
+<ul>
+<li><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(14, 4, 24);">    在如果UITableView的样式pain时，默认情况下，两个都是nil；如果为Group样式，默认是存在的</span></span></span></li>
+<li><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(14, 4, 24);">    backgroundView在位于最底层，在所有的view后面；selectBackGroundView在backgroundView的上面</span></span></span></li>
+</ul>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(14, 4, 24);">14、UITableView的<span style="color: rgb(242, 40, 31);">backgroundView</span>？</span></span></span></div>
+<div><font color="#0E0418" face="Menlo"><span style="font-size: 14px;">     UITableView本身就是一个View，所以它位于最底层；backgroundView在大多数情况下都是不为nil的，作为tableView的subview，</span><span style="font-size: 14px;">behind all cells and headers/footers</span><span style="font-size: 14px;">;tableView的cell也是一个一个的view。</span></font></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(14, 4, 24);">15、Base SDK指的是，当前编译所用的SDK版本；OS Deployment Target指的是，编译后app可在终端的那个版本上运行</span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(14, 4, 24);">16、Base SDK设置为当前xcode所支持的最高sdk版本，比如“iphone Device 4.0”.iphone OS DeploymentTarget设置为你所支持的最低的iphone OS版本，比如“iphone OS 3.0”。</span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(14, 4, 24);">    这样设置之后，你的程序就可以运行在iphone3.0到4.0的设备之上。</span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(14, 4, 24);">17、可以用<u>exit</u>方法直接退出ios程序</span></span></span></div>
+<div><span style="font-family: Menlo;"><span style="color: rgb(14, 4, 24);">18、动态添加ActionSheet的标题：</span></span><a href="http://bj007.blog.51cto.com/1701577/548933">http://bj007.blog.51cto.com/1701577/548933</a></div>
+<div>19、contentOffset是，（scrollView左上角）相当于（scrollView的content左上角的坐标系）的位置</div>
+<div>        contentInset可以增大，contentoffset的滚动区域，（如果把scrollView的bounces设置为No，那么只能滚动到contentSize+contentInset的位置）</div>
+<div><span style="font-family: Menlo; font-size: 14px;"><font color="#373737"><br/></font></span></div>
+</en-note>
+]]></content><created>20140826T154809Z</created><updated>20150327T033555Z</updated><tag>ios经验与技巧</tag><note-attributes><latitude>40.05538940888994</latitude><longitude>116.3262121608527</longitude><altitude>56.66712951660156</altitude><author>344963245</author><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

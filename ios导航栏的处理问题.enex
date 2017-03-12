@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020606Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>ios导航栏的处理问题</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>1、<span style="font-size: 14px;"><b>可以使用原生导航栏：</b></span>然后使用<span style="font-size: 14px; font-family: Menlo; color: rgb(0, 175, 202);">interactivePopGestureRecognizer<span style="color: rgb(2, 17, 17);">手</span><span style="color: rgb(1, 13, 17);">势来控制右滑进行控制器退栈操作。</span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(1, 13, 17);">     优势：简单、易用</span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(1, 13, 17);">     弊端：1、ios6不可用</span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(1, 13, 17);">          2、如果在进行控制器切换时，如果有一个控制器中的导航栏隐藏了，滑动时会错位</span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(1, 13, 17);">2、使用自定view代替原有的导航栏：</span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(1, 13, 17);">     步骤说明：自定义一个view，然后再view中封装好左右返回按钮、中间标题，frame从0、0开始，大小依据现有导航栏的尺寸。     </span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(1, 13, 17);">     优势：1、右滑手势还是可以用系统的。</span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(1, 13, 17);">          2、导航栏自定义话程度高。<br/></span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(1, 13, 17);">     弊端：暂时没有用过，未知</span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(1, 13, 17);">3、放弃系统自己带的导航控制器（口袋购物就是此种做法）：</span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(1, 13, 17);">     步骤说明：自己定义一个继承自UIViewController的控制器，像导航控制器一样，封装里面的方法。</span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(1, 13, 17);">     优势：1、手势、导航栏可以高度自定义化</span></span></span></div>
+<div><span style="font-size: 14px;"><span style="font-family: Menlo;"><span style="color: rgb(1, 13, 17);">     弊端：难度比较大<br/></span></span></span></div>
+</en-note>
+]]></content><created>20141025T062020Z</created><updated>20141025T063515Z</updated><note-attributes><latitude>39.97536349451362</latitude><longitude>116.489525853667</longitude><altitude>39.65065765380859</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

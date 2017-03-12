@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020537Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>PHP</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note lang="">
+<div>1、$申明变量；define(常量名,常量值)</div>
+<div>2、可以使用Global申明一个全局变量，但是申明变量时，不可以赋值</div>
+<div>3、PHP中有“双引号”、“单引号”。</div>
+<div>     a、双引号可以进一步解析变量、转义符</div>
+<div>     b、单引号会原样显示出字符串中的所有内容</div>
+<div>4、PHP中的数组和字典差不多 。因为数组的索引可以是字符串和数字。</div>
+<div>5、Bool值，如果为True，使用echo输出时是1；如果是False，使用echo输出是空</div>
+<div>6、settype()可以改变原有变量的数据类型。</div>
+<div>     intVal()、floatVal()、strVal()（不会改变原有变量）</div>
+<div>     isset()判断变量是否存在</div>
+<div>     empty()检查变量是否为空</div>
+<div>7、echo @($a/$b) 错误抑制符，虽然有错误，但是不会把错误展现在页面</div>
+</en-note>
+]]></content><created>20150701T083619Z</created><updated>20150701T084956Z</updated><note-attributes><latitude>39.97553400845351</latitude><longitude>116.489333819775</longitude><altitude>38.73322296142578</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

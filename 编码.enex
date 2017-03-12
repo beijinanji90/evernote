@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020315Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>编码</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div><br/></div>
+<div>
+<div style="font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<div><span style="font-family: Arial;"><span style="color: rgb(51, 51, 51);">1、Base64</span></span></div>
+<div><span style="font-family: Arial;"><span style="color: rgb(51, 51, 51);">     Base64要求把每三个8Bit的字节转换为四个6Bit的字节（3*8 = 4*6 = 24），然后把6Bit再添两位高位0，组成四个8Bit的字节，也就是说，转换后的字符串理论上将要比原来的长1/3。</span></span></div>
+</div>
+</div>
+<div>
+<div style="font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<div><span style="font-family: Arial;"><span style="color: rgb(51, 51, 51);">     这样说会不会太抽象了？不怕，我们来看一个例子:</span></span></div>
+</div>
+</div>
+<div>
+<div style="font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; padding: 0px; background-color: rgb(255, 255, 255);">
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">          转换前 aaaaaabb ccccdddd eeffffff      </span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">          转换后 00aaaaaa 00bbcccc 00ddddee 00ffffff</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">2、字符编码</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">     ASCll、GB2312、Unicode、UTF-8(非定长标准)</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">3、二进制文件、文本文件</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">     这两个在物理存储上都是一样的，都是已二进制的方式在计算机上存储的。</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">     二进制文件（图片、执行程序等），一般读取完二进制文件之后，可以通过Base64转变为可以用文本编辑器打开的格式，可以阅读的</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;"><br/></span></span></div>
+<div><br/></div>
+</div>
+</div>
+</en-note>
+]]></content><created>20151231T031856Z</created><updated>20160120T064739Z</updated><note-attributes><latitude>39.97556613540323</latitude><longitude>116.4891947984339</longitude><altitude>37.13464736938477</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

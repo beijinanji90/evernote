@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020124Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>多线程</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div><span style="font-family: 'Courier New';">1、单核与多核的区别？</span></div>
+<div><span style="font-family: 'Courier New';">     假设现在有一个双核的cpu，假设每个核心有两个线程，那么每个cpu中两个线程会交替执行，两个cpu之间的操作会并行运算。</span></div>
+<div><span style="font-family: 'Courier New';">     单个cpu而言两个线程可以解决线程阻塞造成的不流畅问题，七本身运行效率并没有提高，多cpu的并行运算才真正解决了运算的效率问题。</span></div>
+<div><span style="font-family: 'Courier New';">     这也正是并发和并行的区别。</span></div>
+<div><span style="font-family: 'Courier New';">2、ios多线程</span></div>
+<div><span style="font-family: 'Courier New';">     1、NSThread</span></div>
+<div><span style="font-family: 'Courier New';">     2、NSOperation</span></div>
+<div><span style="font-family: 'Courier New';">     3、GCD（目前苹果官方比较推荐的方式，充分利用了多核处理器的运算性能）</span></div>
+<div><span style="font-family: 'Courier New';">3、NSThread</span></div>
+<ul>
+<li><span style="font-family: 'Courier New';">     可以用thread.threadPrioity来设置线程的优先级</span></li>
+<li><span style="font-family: 'Courier New';">     线程分为isExecuting（正在执行）、isFinished（已经完成）、isCancelled（已经取消）三中。其中取消状态程序可以干预设置，只要调用线程的cancel方法即可。但是需要在主线程中仅仅能设置线程状态，并不能真正停止当前线程，如果要终止必须在线程中调用exist方法，这是一个静态方法，调用改方法可以退出当前线程；</span></li>
+<li><span style="font-family: 'Courier New';">     <span style="color: rgb(250, 25, 6);">如果想要终止一个线程，不能通过直接在其他线程（就是不是当前线程的中）调用cancel方法，这种做法只是把这个线程标识为已取消的线程，但没有真正的终结这个线程。如果像要终结这个线程，那么需要在当前线程的方法中调用[NSThread exit]方法。</span></span></li>
+<li><span style="font-family: 'Courier New';"><span style="color: rgb(250, 25, 6);"><span style="color: rgb(25, 11, 6);">     NSThread在进行多线程开发过程中操作简单，但是要控制线程执行的顺序并不容易，另外每个线程的创建也相当占用系统开销</span></span></span></li>
+</ul>
+<div><span style="font-family: 'Courier New';"><font color="#190B06">4、扩展—NSObject分类扩展方法</font></span></div>
+<ul>
+<li><span style="font-family: 'Courier New';"><span style="color: rgb(25, 11, 6);">     -(void)performSelectorInBackground:(SEL)aSelector withObject:(id)arg:在后台执行一个操作，本质就是重新创建一个线程执行当前方法。</span></span></li>
+<li><span style="font-family: 'Courier New';"><font color="#190B06">     -(void)performSelector:(SEL)aSelector onThread:(NSThread *)the withObject:(id)arg waitUntilDone:(BOOL)wait:在指定的线程上执行一个方法，需要用户创建一个线程对象。</font></span></li>
+<li><span style="font-family: 'Courier New';"><span style="color: rgb(25, 11, 6);">     -(void)performSelectorOnMainThread:(SEL)aSelector withObject:(id)arg waithUntilDone:(BOOL)wait：在主线程上执行一个方法。</span></span></li>
+</ul>
+<div><span style="font-family: 'Courier New';"><span style="color: rgb(25, 11, 6);">5、NSOperation</span></span></div>
+<ul>
+<li><span style="font-family: 'Courier New';"><span style="color: rgb(25, 11, 6);">     使用NSOperation和NSOperationQueue进行线程开发如C#中的线程池，将一个NSOperation（实际开发中的两个子类，NSInvocationOperation/NSBlokcOperation）放到NSOperationQueue这个队列中线程一次启动。优点：容易管理线程总数和控制线程之间的依赖关系。</span></span></li>
+<li><span style="font-family: 'Courier New';"><span style="color: rgb(25, 11, 6);">     NSInvocationOperation，创建完成之后并不会调用，它有一个start方法，此操作会在主线程中调用，一般不会这么做，而是添加到NSOperationQueue中。</span></span></li>
+<li><span style="font-family: 'Courier New';"><span style="color: rgb(25, 11, 6);">     NSBlockOperation，所有的操作不用单独的定义方法，解决了只能传递一个参数的问题。</span></span></li>
+<li><span style="font-family: 'Courier New';"><span style="color: rgb(25, 11, 6);">     NSThread很难控制线程的执行顺序，使用Operation很容易，每个NSOperation可以设置依赖线程。通过调用addDependecy方法，设置线程依赖关系。</span></span></li>
+</ul>
+<div><span style="color: rgb(25, 11, 6);">5、GCD</span></div>
+<ul>
+<li><span style="color: rgb(25, 11, 6);">     GCD基于C语言开发的一套多线程开发机制，苹果官方推荐的多线程方法。三中多线程开发中GCD抽象层次最高，用起来也最简单，只不过是基于C语言开发，不像NSOperation面向对象的开发，完全是面向过程的开发。</span></li>
+<li><span style="color: rgb(25, 11, 6);">     GCD中也有一个类似与NSOperationQueue的队列，GCD统一管理队列中的任务。GCD中的队列分为两种：</span></li>
+<li><span style="color: rgb(25, 11, 6);">          串行队列：只用一个线程，加入到队列中的操作按添加顺序一次执行</span></li>
+<li><span style="color: rgb(25, 11, 6);">          并发队列：有多个线程，操作进来之后它会将这些队列安排在可用的处理器上，同时保证先进来的任务优先处理。</span></li>
+<li><span style="color: rgb(25, 11, 6);">          GCD中还有一个特殊队列就是主队列，用来执行主线程上的操作任务（NSOperation中也有一个主队列）</span></li>
+</ul>
+<div><span style="color: rgb(25, 11, 6);">6、GCD的一些常用方法：</span></div>
+<div><span style="color: rgb(25, 11, 6);">     a、创建队列的方法：</span></div>
+<div><font color="#190B06">          串行队列 — dispatch_queue_create(“serialQueue”,DISPATCH_QUEUE_SERIAL)</font></div>
+<div><font color="#190B06">          并行队列 — dispatch_queue_create(“prioityQueue”,DIAPATCH_QUEUE_CONCURRENT)</font></div>
+<div><font color="#190B06">          主线程队列 — dispatch_get_main_queue()</font></div>
+<div><font color="#190B06">          全局并发队列 — dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)</font></div>
+<div><span style="color: rgb(25, 11, 6);">     b、执行方法：</span></div>
+<div><font color="#190B06">          同步方法 — dispatch_sync</font></div>
+<div><font color="#190B06">          异步方法 — dispatch_async</font></div>
+<div><span style="color: rgb(25, 11, 6);"><br/></span></div>
+<div><span style="color: rgb(255, 38, 0);">          串行：在这个队列中，任务只能一个接着一个执行，必须是上一个任务完成了，才能执行下一个任务</span></div>
+<div><span style="color: rgb(255, 38, 0);">          并行：多任务执行，可以同时执行多个任务（<span style="color: rgb(4, 51, 255);">可以开多条线程，只有在异步方法中有效</span>；<span style="color: rgb(170, 121, 66);">但是也可以在一条线程中，因为都是通过时间片分布的，一个任务执行不了，可以让另外一个任务执行，等另外的先执行了，上一个任务就可以执行了</span>）</span></div>
+<div><span style="color: rgb(255, 38, 0);">          同步方法：没有新开线程的能力，会阻塞当前线程</span></div>
+<div><span style="color: rgb(255, 38, 0);">          异步方法：有新开线程的能力，不会阻塞当前线程</span></div>
+<div><span style="color: rgb(255, 38, 0);">          为什么 并行 + 同步</span></div>
+<div><span style="color: rgb(255, 38, 0);">                       {</span></div>
+<div><span style="color: rgb(255, 38, 0);">                              并行 + 同步 （虽然同步方法会阻塞现在的当前线程，但是是在并行队列中，一个任务执行不了了，可以让另外任务先执行，然后等另                               外一个任务执行完毕之后，然后在执行之前那个执行不了的任务）</span></div>
+<div><span style="color: rgb(255, 38, 0);">                       }</span></div>
+<div><span style="color: rgb(25, 11, 6);"><span style="color: rgb(255, 38, 0);">          这样为什么不会死锁；可以这样理解：</span><br/></span></div>
+<div><span style="color: rgb(25, 11, 6);">7、GCD结论</span></div>
+<ul>
+<li><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);">在GDC中一个操作是多线程执行还是单线程执行取决于当前队列类型和执行方法，只有队列类型为并行队列并且使用异步方法执行时才能在多个线程中执行</span></span></li>
+<li><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);">串行队列可以按顺序执行，并行队列的异步方法无法确定执行顺序</span></span></li>
+<li><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);">UI界面的更新最好采用同步方法，其他操作采用异步方法</span></span></li>
+<li><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);">GCD中多线程操作方法不需要使用@autoreleasepool，GCD会管理内存。</span></span></li>
+</ul>
+<div>8、其他任务执行方法</div>
+<ol style="padding-left: 50px; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">
+<li style="padding: 0px; list-style-type: decimal;">dispatch_apply():重复执行某个任务，但是注意这个方法没有办法异步执行（为了不阻塞线程可以使用dispatch_async()包装一下再执行）。</li>
+<li style="padding: 0px; list-style-type: decimal;">dispatch_once():单次执行一个任务，此方法中的任务只会执行一次，重复调用也没办法重复执行（单例模式中常用此方法）。</li>
+<li style="padding: 0px; list-style-type: decimal;">dispatch_time()：延迟一定的时间后执行。</li>
+<li style="padding: 0px; list-style-type: decimal;">dispatch_barrier_async()：使用此方法创建的任务首先会查看队列中有没有别的任务要执行，如果有，则会等待已有任务执行完毕再执行；同时在此方法后添加的任务必须等待此方法中任务执行后才能执行。（利用这个方法可以控制执行顺序，例如前面先加载最后一张图片的需求就可以先使用这个方法将最后一张图片加载的操作添加到队列，然后调用dispatch_async()添加其他图片加载任务）</li>
+<li style="padding: 0px; list-style-type: decimal;">dispatch_group_async()：实现对任务分组管理，如果一组任务全部完成可以通过dispatch_group_notify()方法获得完成通知（需要定义dispatch_group_t作为分组标识）。</li>
+</ol>
+<div style="padding: 0px; list-style-type: decimal;">
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Georgia;">9、<span style="color: rgb(253, 57, 7);">两种队列、两种执行方法组合</span>：</span></span></div>
+<ul>
+<li><span style="font-family: Georgia;"><span style="color: rgb(51, 51, 51);">          <span style="color: rgb(255, 43, 5);">串行队列 + 同步方法</span> =  加入到这个队列的方法，</span></span><span style="font-family: Georgia;"><span style="color: rgb(51, 51, 51);">都会在<span style="color: rgb(239, 66, 40);">当前线程线程</span><span style="color: rgb(255, 38, 0);">中执行（如果这个队列是主队列，那么不管当前线程是否为主线程，那么都会在主线程上执行）</span></span></span><span style="font-family: Georgia;"><span style="color: rgb(51, 51, 51);">，并且是<span style="color: rgb(254, 30, 4);">按照顺序</span>执行的。</span></span></li>
+<li><span style="font-family: Georgia;"><span style="color: rgb(51, 51, 51);">          <span style="color: rgb(243, 36, 10);">串行队列 + 异步方法</span> = 加入到这个队列的方法，<span style="color: rgb(253, 52, 7);">其它线程</span>执行（但只会<span style="color: rgb(253, 60, 9);">新开一个线程</span>），并且是<span style="color: rgb(253, 1, 2);">有序执行</span>。</span></span></li>
+<li><span style="font-family: Georgia;"><span style="color: rgb(51, 51, 51);">          <span style="color: rgb(255, 33, 3);">并行队列 + 同步方法</span> = 加入到这个队列的方法，都会在<span style="color: rgb(239, 66, 40);">当前线程</span>中执行，并且是<span style="color: rgb(254, 43, 6);">按照顺序</span>执行的。</span></span></li>
+<li><span style="font-family: Georgia;"><span style="color: rgb(51, 51, 51);">          <span style="color: rgb(242, 47, 11);">并行队列 + 异步方法</span> = 假如到这个队列的方法，<span style="color: rgb(249, 62, 12);">其它线程</span>执行</span></span><span style="font-family: Georgia;"><span style="color: rgb(51, 51, 51);">（<span style="color: rgb(245, 39, 10);">但会新开多个线程</span>）</span></span><span style="font-family: Georgia;"><span style="color: rgb(51, 51, 51);">，并且是<span style="color: rgb(255, 16, 2);">无顺序</span>执行的。</span></span></li>
+</ul>
+<div><span style="font-family: Georgia;"><span style="color: rgb(51, 51, 51);"><br/></span></span></div>
+<div><span style="font-family: Georgia;"><span style="color: rgb(51, 51, 51);">  <span style="color: rgb(255, 33, 3);">        注意：在第二中情况中，如果队列是主线程队列（dispatch_get_main_queue()）,那么即使用了异步方法，也是会在主线程中执行的</span></span></span></div>
+<div><span style="font-family: Georgia;"><span style="color: rgb(51, 51, 51);">          <br/></span></span></div>
+</div>
+<div><span style="color: rgb(25, 11, 6);">9、总结</span></div>
+<div style="text-indent: 0px; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);margin-left:40px;">
+<div>1&gt;无论使用哪种方法进行多线程开发，每个线程启动后并不一定立即执行相应的操作，具体什么时候由系统调度（CPU空闲时就会执行）。</div>
+</div>
+<div style="margin-left:40px;"><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);"><br/></span></span></div>
+<div style="text-indent: 0px; font-family: Georgia, 'Times New Roman', Times, sans-serif; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); margin-left: 40px;">
+<div><span style="color: rgb(51, 51, 51);">2&gt;更新UI应该在主线程（UI线程）中进行，并且推荐使用同步调用，常用的方法如下： <span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;">- (void)performSelectorOnMainThread:(SEL)aSelector withObject:(id)arg waitUntilDone:(BOOL)wait (或者-(void)performSelector:(SEL)aSelector onThread:(NSThread *)thr withObject:(id)arg waitUntilDone:(BOOL) wait;方法传递主线程[NSThread mainThread])</span></span></div>
+<div><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: black; background: white;">[NSOperationQueue mainQueue] addOperationWithBlock:</span></span></div>
+<div><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: black; background: white;">dispatch_sync(dispatch_get_main_queue(), ^{})</span></span></div>
+</div>
+<div style="margin-left:40px;"><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);"><br/></span></span></div>
+<div style="text-indent: 0px; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);margin-left:40px;">
+<div>3&gt;NSThread适合轻量级多线程开发，控制线程顺序比较难，同时线程总数无法控制（每次创建并不能重用之前的线程，只能创建一个新的线程）。</div>
+</div>
+<div style="margin-left:40px;"><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);"><br/></span></span></div>
+<div style="text-indent: 0px; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);margin-left:40px;">
+<div>4&gt;对于简单的多线程开发建议使用NSObject的扩展方法完成，而不必使用NSThread。</div>
+</div>
+<div style="margin-left:40px;"><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);"><br/></span></span></div>
+<div style="text-indent: 0px; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);margin-left:40px;">
+<div>5&gt;可以使用NSThread的currentThread方法取得当前线程，使用 sleepForTimeInterval:方法让当前线程休眠。</div>
+</div>
+<div style="margin-left:40px;"><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);"><br/></span></span></div>
+<div style="text-indent: 0px; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);margin-left:40px;">
+<div>6&gt;NSOperation进行多线程开发可以控制线程总数及线程依赖关系。</div>
+</div>
+<div style="margin-left:40px;"><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);"><br/></span></span></div>
+<div style="text-indent: 0px; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);margin-left:40px;">
+<div>7&gt;创建一个NSOperation不应该直接调用start方法（如果直接start则会在主线程中调用）而是应该放到NSOperationQueue中启动。</div>
+</div>
+<div style="margin-left:40px;"><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);"><br/></span></span></div>
+<div style="text-indent: 0px; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);margin-left:40px;">
+<div>8&gt;相比NSInvocationOperation推荐使用NSBlockOperation，代码简单，同时由于闭包性使它没有传参问题。</div>
+</div>
+<div style="margin-left:40px;"><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);"><br/></span></span></div>
+<div style="text-indent: 0px; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);margin-left:40px;">
+<div>9&gt;NSOperation是对GCD面向对象的ObjC封装，但是相比GCD基于C语言开发，效率却更高，建议如果任务之间有依赖关系或者想要监听任务完成状态的情况下优先选择NSOperation否则使用GCD。</div>
+</div>
+<div style="margin-left:40px;"><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);"><br/></span></span></div>
+<div style="text-indent: 0px; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);margin-left:40px;">
+<div>10&gt;在GCD中串行队列中的任务被安排到一个单一线程执行（不是主线程），可以方便地控制执行顺序；并发队列在多个线程中执行（前提是使用异步方法），顺序控制相对复杂，但是更高效。</div>
+</div>
+<div style="margin-left:40px;"><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);"><br/></span></span></div>
+<div style="text-indent: 0px; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);margin-left:40px;">
+<div>11&gt;在GDC中一个操作是多线程执行还是单线程（<span style="color: rgb(237, 28, 12);">这里的单线程并不一定是主线程，或许单独开的一条新的线程， 就是一条线程</span>）执行取决于当前队列类型和执行方法，只有队列类型为<span style="color: rgb(254, 41, 4);">并行队列并且使用异步方法执行时才能在多个线程中</span>执行（<span style="color: rgb(254, 32, 5);">如果是并行队列使用同步方法调用则会在主线程中执行</span>）。</div>
+</div>
+<div style="margin-left:40px;"><span style="font-family: Georgia, 'Times New Roman', Times, sans-serif;"><span style="color: rgb(51, 51, 51);"><br/></span></span></div>
+<div style="margin-left:40px;">12&gt;相比使用NSLock，@synchronized更加简单，推荐使用后者。</div>
+<div style="margin-left:40px;"><br/></div>
+<div>10、dispatch信号量（dispatch semaphore）</div>
+<div>          1、创建信号量，可以设置信号量的资源数。0表示没有资源，调用dispatch_semaphore_wait会理解等待。</div>
+<div>           dispatch_semaphore_t semaphore = dispatch_semaphore_create(0)</div>
+<div>          2、等待信号，可以设置超时参数。该函数返回0表示得到通知，非0表示超时。</div>
+<div>          dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)</div>
+<div>           3、通知信号，如果等待线程被唤醒返回非0，否则返回0</div>
+<div>            dispatch_semaphore_signal(semaphore)</div>
+<div>           最后，还是回到生成消费者的例子，使用dispatch信号量可以实现同步。</div>
+<div>          </div>
+<div>           //创建信号量，可以设置（大于等于0），如果为0那么表示没有资源</div>
+<div>           dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</div>
+<div>          //异步开始执行一个异步任务</div>
+<div>           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIOPITY_DEFAULT,0),^{</div>
+<div>                  NSLog(@“我在async里面&quot;);</div>
+<div>                 //信号量+1</div>
+<div>                  dispatch_semaphore_signal(semaphore);</div>
+<div>                  NSLog(@“我是在信号量之后”);</div>
+<div>          });</div>
+<div>          //信号量-1</div>
+<div>          dispatch_semaphore_wait(semaphore,DISPATCH_TIME_FOREVER);</div>
+<div>          NSLog(@“我是在阻塞之后”);</div>
+<div><br/></div>
+<div>11、GCD的定时器</div>
+<div>          dispatch_source_t：可以监控系统特性，例如端口、文件、时间。</div>
+<div>          dispatch_source_set_timer();1、可以设置间隔时间；2、时间误差，误差最小为0</div>
+<div>          static NSInteger index = 1;</div>
+<div>          dispatch_source_t timer = dispatch_source_create( <span style="font: 14.0px Menlo; font-variant-ligatures: no-common-ligatures; color: #d28f5a">DISPATCH_SOURCE_TYPE_TIMER,0,0,dispatch_get_global_queue(DISPATCH_QUEUE_RPIORITY_DEFAUTL,0)</span>);</div>
+<div>          dispatch_source_set_timer(timer,DISPATCH_TIME_NOW, 2 * NSEC_PER, 0 * NSEC_PER_SEC);</div>
+<div>          dispatch_source_set_event_handler(timer, ^(</div>
+<div>                    if(index &lt;= 5)</div>
+<div>                    {</div>
+<div>                         NSLog(@“开始：%ld”,(long)index);</div>
+<div>                         index++;</div>
+<div>                    }</div>
+<div>                    else</div>
+<div>                     {</div>
+<div>                         dispatch_source_cancel(timer);</div>
+<div>                     }</div>
+<div>           ));</div>
+<div>           dispatch_source_set_cancel_handler(timer,^{</div>
+<div>                    NSLog(@“我取消了定时器&quot;);</div>
+<div>                    dispatch_resume(timer);</div>
+<div>           });</div>
+<div>           dispatch_resume(timer);</div>
+<div style="margin-left:40px;"><br/></div>
+<div>     </div>
+</en-note>
+]]></content><created>20150720T063848Z</created><updated>20160715T103510Z</updated><note-attributes><latitude>39.97552757392651</latitude><longitude>116.4893120295328</longitude><altitude>39.78529739379883</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

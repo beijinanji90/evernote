@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T015823Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>Mac下常用命令副本</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>1、快捷键显示终端</div>
+<div>     terminal</div>
+<div>2、HHKB配列快捷键</div>
+<div>
+<ul>
+<li>移动光标快捷键 - Control-F 光标前进一个字符，相当于右键（F = Forward）</li>
+</ul>
+<ul>
+<li>Control-B 光标后退一个字符，相当于左键（B = Backward）</li>
+<li>Control-P 上移一行，相当于上键（P = Previous）</li>
+<li>Control-N 下移一行，相当于下键（N = Next）</li>
+<li>Control-A 移动到一行的开头（A = Ahead）</li>
+<li>Control-E 移动到一行的结尾（E = End）</li>
+</ul>
+<ul>
+<li>文字删除快捷键</li>
+</ul>
+<ul>
+<li>Control-H 删除光标前面的字符</li>
+<li>Control-D 删除光标后面的字符</li>
+<li>Control-K 删除从光标开始，到一行结尾的所有字符</li>
+</ul>
+<ul>
+<li>文字选择快捷键</li>
+</ul>
+<ul>
+<li>Control-Shift-A 选中从光标开始，到一行开头的所有文字</li>
+<li>Control-Shift-E 选中从光标开始，到一行结尾的所有文字</li>
+</ul>
+</div>
+<div><br/></div>
+</en-note>
+]]></content><created>20170311T161256Z</created><updated>20170311T161256Z</updated><note-attributes><latitude>40.03098318588295</latitude><longitude>116.5352703062589</longitude><altitude>44.49047088623047</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

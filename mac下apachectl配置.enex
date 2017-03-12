@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020335Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>mac下apachectl配置</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>1、sudo vi /etc/apache2/httpd.conf</div>
+<div>2、sudo apachectl restart</div>
+<div>3、sudo apachectl start</div>
+<div>4、sudo vi /etc/hosts</div>
+<div>5、sudo vi /etc/apache2/extra/http-vhosts.conf</div>
+</en-note>
+]]></content><created>20160112T090326Z</created><updated>20160112T093845Z</updated><note-attributes><latitude>39.97552177292905</latitude><longitude>116.4892176435096</longitude><altitude>35.37014007568359</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020511Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>音频播放、录音、视频播放、拍照、视频录制</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>1、音频：</div>
+<div>      ios可以分音效播放、音乐播放。播放两类音频分别使用AudioToolbox.framework和AVFoundation.framework来完成音效和音乐播放。是基于一套C语言的框架，使用它来播放音效其本质是将短音频注册到系统声音服务（System Sound Service）。System Sound Service是一种简单、底层的声音播放服务</div>
+<ul>
+<li>     音频播放时间不能超过30s</li>
+<li>     数据必须是PCM或者IMA4格式</li>
+<li>     音频文件必须打包成.caf/.aif/.wav中的一种</li>
+</ul>
+<div>使用System Sound Service播放音频的步骤如下</div>
+<ul>
+<li>     调用AudioServicesCreateSystemSoundID函数获得系统声音ID（这一步定义一个SystemSoundID是，一定要先赋值为0，否则程序崩溃）</li>
+<li>     如果需要监听播放完成操作，则使用AudioServicesAddSystemSoundCompletion</li>
+<li>     调用AudioServicesPlaySystemSound或者AudioServicesPlayAlertSound方法播放音效（后者带有震动效果）</li>
+</ul>
+<div>2、音乐：</div>
+<div>      AVFoundion.framework中的AVAudioPlayer来实现。AVAudionPlayer是一个播放器，能够进行进度、音量、播放速度等控制。</div>
+<div>3、音频会话</div>
+<div>     在iOS中每个应用都有一个音频会话，通过AVAudioSession来表示。AVAudioSession也在AVFoundation框架中，它是单例。在使用Apple时只要打开某个app的音频其他的播放就会终止，而有些应用可以和其他应用同事播放，这个就是通过音频会话来控制的。</div>
+<div><br/></div>
+<div>
+<table cellspacing="0" cellpadding="0" width="100%" border="0" style="border: 1px solid silver; border-collapse: collapse; word-break: break-word; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">
+<tbody>
+<tr style="color: rgb(255, 255, 255); font-weight: bold; background-color: rgb(208, 216, 232);">
+<td valign="top" width="50%" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">属性</td>
+<td valign="top" width="50%" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">说明</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property(readonly, getter=isPlaying) BOOL playing</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是否正在播放，只读</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property(readonly) NSUInteger numberOfChannels</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">音频声道数，只读</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property(readonly) NSTimeInterval duration</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">音频时长</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property(readonly) NSURL *url</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">音频文件路径，只读</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property(readonly) NSData *data</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">音频数据，只读</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property float pan</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">立体声平衡，如果为-1.0则完全左声道，如果0.0则左右声道平衡，如果为1.0则完全为右声道</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property float volume</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">音量大小，范围0-1.0</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property BOOL enableRate</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是否允许改变播放速率</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property float rate</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">播放速率，范围0.5-2.0，如果为1.0则正常播放，如果要修改播放速率则必须设置enableRate为YES</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property NSTimeInterval currentTime</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">当前播放时长</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property(readonly) NSTimeInterval deviceCurrentTime</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">输出设备播放音频的时间，注意如果播放中被暂停此时间也会继续累加</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property NSInteger numberOfLoops</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">循环播放次数，如果为0则不循环，如果小于0则无限循环，大于0则表示循环次数</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property(readonly) NSDictionary *settings</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">音频播放设置信息，只读</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property(getter=isMeteringEnabled) BOOL meteringEnabled</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是否启用音频测量，默认为NO，一旦启用音频测量可以通过updateMeters方法更新测量值</td>
+</tr>
+<tr style="color: rgb(255, 255, 255); font-weight: bold; background-color: rgb(208, 216, 232);">
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">对象方法</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">说明</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">- (instancetype)initWithContentsOfURL:(NSURL *)url error:(NSError **)outError</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">使用文件URL初始化播放器，注意这个URL不能是HTTP URL，AVAudioPlayer不支持加载网络媒体流，只能播放本地文件</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">- (instancetype)initWithData:(NSData *)data error:(NSError **)outError</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">使用NSData初始化播放器，注意使用此方法时必须文件格式和文件后缀一致，否则出错，所以相比此方法更推荐使用上述方法或- (instancetype)initWithData:(NSData *)data fileTypeHint:(NSString *)utiString error:(NSError **)outError方法进行初始化</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">- (BOOL)prepareToPlay;</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">加载音频文件到缓冲区，注意即使在播放之前音频文件没有加载到缓冲区程序也会隐式调用此方法。</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">- (BOOL)play;</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">播放音频文件</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">- (BOOL)playAtTime:(NSTimeInterval)time</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">在指定的时间开始播放音频</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">- (void)pause;</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">暂停播放</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">- (void)stop;</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">停止播放</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">- (void)updateMeters</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">更新音频测量值，注意如果要更新音频测量值必须设置meteringEnabled为YES，通过音频测量值可以即时获得音频分贝等信息</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">- (float)peakPowerForChannel:(NSUInteger)channelNumber;</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">获得指定声道的分贝峰值，注意如果要获得分贝峰值必须在此之前调用updateMeters方法</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">- (float)averagePowerForChannel:(NSUInteger)channelNumber</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">获得指定声道的分贝平均值，注意如果要获得分贝平均值必须在此之前调用updateMeters方法</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">@property(nonatomic, copy) NSArray *channelAssignments</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">获得或设置播放声道</td>
+</tr>
+<tr style="color: rgb(255, 255, 255); font-weight: bold; background-color: rgb(208, 216, 232);">
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">代理方法</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">说明</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">音频播放完成</td>
+</tr>
+<tr>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error</td>
+<td valign="top" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">音频解码发生错误</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div><br/></div>
+<div>     </div>
+<table cellspacing="0" cellpadding="0" width="800" border="0" style="border: 1px solid silver; border-collapse: collapse; word-break: break-word; color: rgb(51, 51, 51); font-family: Georgia, 'Times New Roman', Times, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);width:800px;">
+<tbody>
+<tr style="color: rgb(255, 255, 255); font-weight: bold; background-color: rgb(208, 216, 232);">
+<td valign="top" width="291" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;width:35.375%;">会话类型</td>
+<td valign="top" width="349" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;width:43.375%;">说明</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;width:5.75%;">是否要求输入</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;width:5.75%;">是否要求输出</td>
+<td valign="top" width="64" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;width:9.625%;">是否遵从静音键</td>
+</tr>
+<tr>
+<td valign="top" width="291" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">AVAudioSessionCategoryAmbient</td>
+<td valign="top" width="349" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">混音播放，可以与其他音频应用同时播放</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">否</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是</td>
+<td valign="top" width="64" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是</td>
+</tr>
+<tr>
+<td valign="top" width="291" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">AVAudioSessionCategorySoloAmbient</td>
+<td valign="top" width="349" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">独占播放</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">否</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是</td>
+<td valign="top" width="64" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是</td>
+</tr>
+<tr>
+<td valign="top" width="291" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">AVAudioSessionCategoryPlayback</td>
+<td valign="top" width="349" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">后台播放，也是独占的</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">否</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是</td>
+<td valign="top" width="64" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">否</td>
+</tr>
+<tr>
+<td valign="top" width="291" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">AVAudioSessionCategoryRecord</td>
+<td valign="top" width="349" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">录音模式，用于录音时使用</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">否</td>
+<td valign="top" width="64" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">否</td>
+</tr>
+<tr>
+<td valign="top" width="291" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">AVAudioSessionCategoryPlayAndRecord</td>
+<td valign="top" width="349" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">播放和录音，此时可以录音也可以播放</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是</td>
+<td valign="top" width="64" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">否</td>
+</tr>
+<tr>
+<td valign="top" width="291" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">AVAudioSessionCategoryAudioProcessing</td>
+<td valign="top" width="349" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">硬件解码音频，此时不能播放和录制</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">否</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">否</td>
+<td valign="top" width="64" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">否</td>
+</tr>
+<tr>
+<td valign="top" width="291" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">AVAudioSessionCategoryMultiRoute</td>
+<td valign="top" width="349" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">多种输入输出，例如可以耳机、USB设备同时播放</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是</td>
+<td valign="top" width="48" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">是</td>
+<td valign="top" width="64" style="border: 1px solid silver; padding: 3px; color: rgb(0, 102, 204); border-collapse: collapse;">
+<div>否</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div>是否遵循静音键表示播放过程中如果用户通过硬件设置为静音是否能关闭声音。</div>
+<div>其中有一个setActive方法，方法将会话激活才能起作用。如果在我们的应用播放完成之后能够继续播放其他应用的音频，那么就需要在我们引用播放完成、退出的时候将setActive:NO，这样才会继续播放其他app的音频。</div>
+<div> 4、拔出耳机暂停音乐的功能。</div>
+<div>     需要监听AVAudioSessionRouteChangeNotification通知，在处理方法中，可以暂停音频的播放。</div>
+<div>5、实现音频进度的拖动功能。</div>
+<div>     需要设置self.audioPlayer.currentTime属性的值，这个属性值是在整个播放时间范围内的任意的的一个时间值。</div>
+<div>     通过self.audioPlayer.duration属性可以获取到音频总得播放时间。</div>
+<div>     self.audioPlayer.deviceCurrentTime输出播放的时间。</div>
+<div>6、扩展-播放音乐库中的音乐</div>
+<div>     在MediaPlayer.framework中有一个MPMusicPlayerController用于播放音乐库中的音乐。</div>
+<div>7、录音</div>
+<div>     在AVFoundation框架中还要一个AVAudioRecorder类专门处理录音操作，它同样支持多种音频格式。与AVAudioPlayer类似，就是一个录音机控制类。</div>
+<div>     </div>
+<div><br/></div>
+<div><en-media style="height: auto;" type="image/png" hash="7505643e47220c0af7cf8e1a548f87ee"/></div>
+</en-note>
+]]></content><created>20150716T091741Z</created><updated>20150720T033240Z</updated><note-attributes><latitude>39.97552545762823</latitude><longitude>116.4892715417377</longitude><altitude>40.58338165283203</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes><resource><data encoding="base64">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</data><mime>image/png</mime><width>775</width><height>497</height><duration>0</duration><recognition><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE recoIndex PUBLIC "SYSTEM" "http://xml.evernote.com/pub/recoIndex.dtd">
+<recoIndex docType="unknown" objType="image" objID="7505643e47220c0af7cf8e1a548f87ee" engineVersion="6.6.33.3" recoType="service" lang="zh" objWidth="775" objHeight="497"><item x="170" y="57" w="86" h="14"><t w="38">系吝充音频服务</t><t w="38">系?充音频服务</t><t w="37">系快音频服务</t><t w="37">系吝亮音频服务</t><t w="37">票吝充音频服务</t><t w="37">系夸充音频服务</t><t w="37">系乡充音频服务</t><t w="37">系?亮音频服务</t><t w="37">系统音频服务</t><t w="37">票?充音频服务</t></item><item x="260" y="58" w="54" h="13"><t w="75">(System</t><t w="54">（System</t><t w="53">( Sys tem</t><t w="53">( System</t><t w="53">( 旦ys tem</t><t w="53">( Syst em</t><t w="52">《 system</t><t w="50">( Sys te孤</t><t w="47">( 旦ys te孤</t><t w="46">( Syst 巴孤</t></item><item x="321" y="59" w="40" h="11"><t w="80">Sound</t><t w="54">日ound</t><t w="51">日0und</t><t w="50">日。und</t><t w="45">sot md</t><t w="43">sot來神</t><t w="43">sot纲神</t><t w="43">sot來丹</t><t w="43">sot纲丹</t><t w="42">sot me</t></item><item x="127" y="66" w="29" h="14"><t w="41">音效</t><t w="38">音敕</t><t w="37">音薄</t><t w="37">音致</t><t w="34">昔效</t><t w="33">昔敕</t><t w="32">昔薄</t><t w="32">昔致</t><t w="31">目叫</t><t w="31">目圳</t></item><item x="166" y="76" w="61" h="12"><t w="74">Service 》</t><t w="74">Service &gt;</t><t w="53">services</t><t w="53">serviced</t><t w="52">service</t><t w="50">Serv 工 cel 》</t><t w="50">Serv 工 cel &gt;</t><t w="49">Serv ice 》</t><t w="49">Serv ice &gt;</t><t w="46">Serv 工 巴 巴1 》</t></item><item x="168" y="98" w="103" h="14"><t w="67">Audi</t><t w="48">AVAudioPlayer</t><t w="46">op layer</t><t w="43">AVAudi0Player</t><t w="41">oPl ? ? er</t><t w="41">oPl ? ye ?</t><t w="41">AVAudioPIayer</t><t w="41">AVA口dioPlayer</t><t w="41">op lay er</t></item><item x="75" y="114" w="27" h="13"><t w="42">播放</t><t w="34">搭放</t><t w="17">播掛</t><t w="17">播散</t></item><item x="126" y="131" w="29" h="15"><t w="65">音乐</t><t w="49">青乐</t><t w="42">育乐</t><t w="34">吉乐</t><t w="34">昔乐</t><t w="32">音ft</t><t w="30">音st</t><t w="25">盲乐</t><t w="25">音月三</t></item><item x="168" y="129" w="183" h="14"><t w="56">controller</t><t w="53">control ? ? er</t><t w="50">l!Pllus i ? player</t><t w="50">control er</t><t w="50">control Le蘆</t><t w="50">control IE蘆</t><t w="50">control IE胎</t><t w="50">control Le胎</t><t w="50">control Le蓋</t><t w="50">control IE蓋</t></item><item x="382" y="130" w="8" h="10"><t w="23">算</t><t w="20">駕</t><t w="19">諷</t><t w="19">誡</t><t w="19">民</t><t w="18">.x</t><t w="15">l&lt;</t><t w="11">且</t></item><item x="17" y="144" w="46" h="18"><t w="47">音频｜</t><t w="38">音频</t><t w="33">音頻</t><t w="33">音颇</t><t w="31">昔频</t><t w="30">目蚵</t><t w="28">昔頻</t><t w="28">昔颇</t><t w="27">目輛</t><t w="26">目輔</t></item><item x="168" y="154" w="60" h="16"><t w="47">音頻臥ell</t><t w="45">音頻趴ell</t><t w="44">音频臥ell</t><t w="43">音頻队ell</t><t w="43">音頻肌ell</t><t w="43">音頻臥漫il</t><t w="43">音頻fae il</t><t w="43">音頻fa ell</t><t w="43">音頻臥今il</t><t w="42">音频趴ell</t></item><item x="228" y="154" w="30" h="16"><t w="65">服务</t><t w="39">服之</t><t w="39">卡曇之</t><t w="38">卡员之</t><t w="38">卡協之</t><t w="37">卡暴之</t><t w="36">有曇之</t><t w="36">有员之</t><t w="36">卡曇务</t></item><item x="260" y="156" w="46" h="13"><t w="69">(Audi 。</t><t w="66">(Audi o</t><t w="63">(Audi顿</t><t w="62">(Audi県</t><t w="62">(Audi缪</t><t w="58">（Audio</t><t w="56">（Audi 。</t><t w="51">（Audi顿</t><t w="51">（Audi県</t><t w="51">（Audi缪</t></item><item x="313" y="157" w="41" h="12"><t w="68">Queue</t></item><item x="312" y="158" w="81" h="16"><t w="79">Queue高</t><t w="78">Queue抽</t><t w="78">Queue擁</t><t w="78">Queue繃</t><t w="75">Queue j</t><t w="73">Queue d</t><t w="66">Queue ,I</t><t w="50">Queu巴高</t><t w="50">Queu巴抽</t><t w="50">Queu巴擁</t></item><item x="168" y="174" w="68" h="13"><t w="62">Services)</t><t w="47">Services</t><t w="44">Seri ces)</t></item><item x="168" y="198" w="119" h="12"><t w="63">Audi</t><t w="53">。 recorder</t><t w="53">顿recorder</t><t w="53">県recorder</t><t w="52">僕recorder</t><t w="49">oRe cor de主</t><t w="49">oRe 已 or de主</t><t w="49">oR 巴 cor de主</t><t w="48">oRe cor de芷</t><t w="48">oR 巴 已 or de主</t></item><item x="100" y="213" w="27" h="13"><t w="42">录音</t><t w="37">录昔</t><t w="25">景音</t><t w="24">景吾</t><t w="23">素音</t><t w="23">景青</t><t w="19">景育</t><t w="15">景吉</t><t w="13">景膏</t></item><item x="168" y="218" w="60" h="16"><t w="43">臥ell</t><t w="40">音頻</t><t w="39">趴ell</t><t w="38">音频</t><t w="37">fae IL</t><t w="37">臥漫IL</t><t w="37">臥今IL</t><t w="36">fa ell</t><t w="36">队ell</t><t w="35">肌ell</t></item><item x="228" y="218" w="30" h="16"><t w="67">服务</t><t w="39">服之</t><t w="37">卡员之</t><t w="37">卡曇之</t><t w="37">卡協之</t><t w="36">卡暴之</t><t w="35">有员之</t><t w="35">有曇之</t><t w="34">卡员务</t></item><item x="260" y="220" w="46" h="13"><t w="59">（Audio</t><t w="39">(Audi 。 Queue</t><t w="39">(Audi o Queue</t><t w="37">(Audi顿Queue</t><t w="37">(Audi県Queue</t><t w="37">(Audi缪Queue</t><t w="35">（Audi 。 Queue</t><t w="34">（Audi顿Queue</t><t w="33">（Audi県Queue</t><t w="33">（Audi缪Queue</t></item><item x="313" y="221" w="41" h="12"><t w="68">Queue</t></item><item x="168" y="238" w="68" h="13"><t w="62">Services)</t><t w="47">Services</t><t w="44">Seri ces)</t></item><item x="168" y="256" w="183" h="14"><t w="55">controller</t><t w="49">control IE蘆</t><t w="49">control Le蘆</t><t w="48">control IE胎</t><t w="48">control Le胎</t><t w="48">control IE蓋</t><t w="46">player</t><t w="44">MPMoviePlayerController</t><t w="44">MP阻ovi吕PlayerController</t><t w="44">MP阻oviePlayerController</t></item><item x="354" y="256" w="13" h="13"><t w="46">(M</t><t w="34">《葛</t><t w="34">《醫</t><t w="33">《瞿</t><t w="32">IM</t><t w="29">軸</t><t w="28">郤</t><t w="26">(日</t><t w="19">(it</t></item><item x="168" y="274" w="199" h="14"><t w="54">Vi已腥control Le</t><t w="53">Vi已腥control IE</t><t w="53">Vi日腥control 1巴</t><t w="53">Vi日腥control Le</t><t w="53">Vi日腥control IE</t><t w="53">Vi已腥control 1巴</t><t w="53">Vi已脚control IE</t><t w="53">Vi已脚control Le</t><t w="53">Vi日脚control Le</t><t w="53">Vi已曹control 1巴</t></item><item x="378" y="271" w="15" h="12"><t w="38">高</t><t w="35">尖</t><t w="35">抽</t><t w="33">繃</t></item><item x="168" y="292" w="12" h="13"><t w="52">r)</t></item><item x="99" y="302" w="29" h="16"><t w="45">播放</t><t w="34">搭放</t><t w="20">插放</t><t w="19">捕放</t><t w="17">播掛</t><t w="17">播散</t></item><item x="168" y="314" w="63" h="14"><t w="53">av player</t><t w="49">合Player</t><t w="49">人Player</t><t w="49">巖Player</t><t w="49">犬Player</t><t w="48">的Player</t><t w="47">合PI ayer</t><t w="47">合習player</t><t w="47">AVPlayer</t><t w="47">人PI ayer</t></item><item x="239" y="314" w="119" h="14"><t w="52">IA習queue player 》</t><t w="51">IA習queue player &gt;</t><t w="50">IA又queue player 》</t><t w="50">IA又queue player &gt;</t><t w="50">IA册queue player 》</t><t w="50">IA旱queue player &gt;</t><t w="50">IA册queue player &gt;</t><t w="50">IA旱queue player 》</t><t w="50">( AVQueuePlayer 》</t><t w="50">( AVQueuePlayer &gt;</t></item><item x="376" y="311" w="17" h="12"><t w="37">高</t><t w="35">抽</t><t w="34">擁</t><t w="33">繃</t></item><item x="168" y="334" w="75" h="16"><t w="27">第二芳框架</t><t w="26">第二穷框架</t><t w="24">第二究框架</t><t w="23">第二肃框架</t><t w="22">第二芹框架</t><t w="22">策二芳框架</t><t w="21">策二穷框架</t><t w="20">第三芳框架</t><t w="20">篇二芳框架</t><t w="19">第三穷框架</t></item><item x="250" y="334" w="38" h="16"><t w="45">〈例如</t><t w="25">《例如</t></item><item x="288" y="337" w="30" h="11"><t w="46">VLC、</t></item><item x="168" y="354" w="56" h="12"><t w="42">ffmoee)</t></item><item x="17" y="366" w="47" h="20"><t w="45">视频｜</t><t w="36">视频</t><t w="30">视頻</t><t w="30">视颇</t><t w="29">視频</t><t w="27">視頻</t><t w="26">視颇</t><t w="26">视频1</t><t w="14">視蚵</t><t w="11">視輛</t></item><item x="168" y="378" w="103" h="12"><t w="53">HP movie player</t><t w="50">MP movie player</t><t w="49">葛目movie player</t><t w="49">葛习movie player</t><t w="49">葛兄movie player</t><t w="49">醫目movie player</t><t w="49">瞿目movie player</t><t w="49">醫习movie player</t><t w="49">瞿习movie player</t><t w="49">醫兄movie player</t></item><item x="271" y="378" w="79" h="11"><t w="95">Controller</t><t w="60">Controll er</t><t w="60">口ontroll er</t><t w="59">Co口troll er</t><t w="58">口ontrOller</t><t w="58">Controll 巴工</t><t w="58">口ontroll 巴工</t><t w="56">control Le胎</t><t w="56">control IE胎</t><t w="56">control IE蘆</t></item><item x="77" y="392" w="74" h="16"><t w="43">缩略图</t><t w="37">缩略圈</t><t w="37">縮略图</t><t w="36">縮略圈</t><t w="36">视频</t><t w="35">缩略留</t><t w="34">縮略留</t><t w="31">缩骨各图</t><t w="31">縮骨各图</t><t w="31">缩骨各圈</t></item><item x="168" y="410" w="62" h="12"><t w="47">AVAssetl</t><t w="34">AVAssetI</t><t w="34">AVAsset1</t><t w="26">AV且sset1</t></item><item x="231" y="413" w="8" h="8"><t w="28">匾</t><t w="12">血</t></item><item x="240" y="410" w="95" h="14"><t w="50">ageGenerator</t><t w="45">司geGenerator</t><t w="42">ageGen自rator</t><t w="39">ageGener司tor</t><t w="39">ageGenera立or</t><t w="38">司geGen自rator</t><t w="36">ageenerator</t><t w="35">aeGenerator</t><t w="34">司geGener司tor</t><t w="34">司geGenera立or</t></item><item x="168" y="443" w="15" h="10"><t w="73">UI</t><t w="47">Ul</t><t w="45">口工</t><t w="35">目了</t><t w="33">目丫</t><t w="30">丌了</t><t w="28">丌丫</t></item><item x="183" y="442" w="88" h="12"><t w="55">image Ricker</t><t w="53">ImagePi eke工</t><t w="53">Ima 皂 ePi eke工</t><t w="53">Ima 皂 巴Pi eke工</t><t w="52">Ima gePi eke工</t><t w="52">Im agePi eke工</t><t w="52">ImagePi eke芷</t><t w="52">Ima 皂 ePi eke芷</t><t w="52">Ima 皂 巴Pi eke芷</t><t w="52">image pick ?工</t></item><item x="271" y="442" w="79" h="11"><t w="95">Controller</t><t w="60">Controll er</t><t w="60">口ontroll er</t><t w="59">Co口troll er</t><t w="59">Controll 巴工</t><t w="58">口ontrOller</t><t w="58">口ontroll 巴工</t><t w="56">control IE蘆</t><t w="56">control Le蘆</t><t w="56">control IE胎</t></item><item x="80" y="456" w="42" h="16"><t w="54">拍照／</t><t w="52">拍照／：</t><t w="36">拍照Ji</t><t w="30">丰自FI FI /</t><t w="30">拍FI FI /</t><t w="30">丰自FI FI 1</t><t w="30">丰自卡FI /</t><t w="30">拍卡FI /</t><t w="30">丰自卡FI 1</t><t w="30">拍FI FI 1</t></item><item x="120" y="456" w="26" h="16"><t w="40">录制</t><t w="35">录靠!</t><t w="35">录靠1</t><t w="34">录宵!</t><t w="34">录苇!</t><t w="34">录宵1</t><t w="34">录苇1</t><t w="34">录圭!</t><t w="34">录靠」</t><t w="34">录圭1</t></item><item x="232" y="464" w="140" h="14"><t w="54">eSession\AVCapturi</t><t w="35">AVCaptureSession\AVCaptur</t><t w="34">AV captive session lav Capt !坟</t><t w="34">AV captive session lav启aPTT坟</t><t w="34">AV captive session lav Capt !道</t><t w="34">AV captive session ia VC aPTT坟</t><t w="34">AV captive session lav日aPTT坟</t><t w="34">AV captive session Ta VC aPTT坟</t><t w="34">AV captive session lav Capt !玫</t><t w="34">AV captive session ia VC aPTT道</t></item><item x="633" y="272" w="89" h="16"><t w="41">音频播放</t><t w="37">音频搭放</t><t w="37">支持</t><t w="36">音頻播放</t><t w="35">支持音频播放</t><t w="35">昔频播放</t><t w="34">音頻搭放</t><t w="33">昔頻播放</t><t w="33">昔频搭放</t><t w="31">责持</t></item><item x="633" y="312" w="89" h="16"><t w="41">音频播放</t><t w="37">音频搭放</t><t w="37">支持</t><t w="36">音頻播放</t><t w="35">支持音频播放</t><t w="35">昔频播放</t><t w="34">音頻搭放</t><t w="33">昔頻播放</t><t w="33">昔频搭放</t><t w="31">责持</t></item><item x="633" y="344" w="89" h="14"><t w="44">支持音频播放</t><t w="41">支持音频搭放</t><t w="41">支持昔频播放</t><t w="41">支持音頻播放</t><t w="40">支持昔頻播放</t><t w="40">支持音頻搭放</t><t w="40">支持昔频搭放</t><t w="39">责持音频播放</t><t w="39">支持音蚵擂掛</t><t w="39">克持音频播放</t></item><item x="505" y="334" w="28" h="16"><t w="70">自行</t></item><item x="564" y="438" w="21" h="20"><t w="26">I"</t></item></recoIndex>]]></recognition><resource-attributes><timestamp>19700101T000000Z</timestamp><reco-type>unknown</reco-type><file-name>260914422024869.png</file-name></resource-attributes></resource></note>
+</en-export>

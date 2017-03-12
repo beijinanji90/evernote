@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020404Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>Instashop待优化地方（长期）</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>1、网络库，调用super setParam (基本已搞定，后续需要继续优化)</div>
+<div>2、控制器统一处理网络失败情况 （这个问题的初步解决方法已出来）</div>
+<div>3、UITableViewCell可以滑动出多个按钮的第三方</div>
+<div>4、滑动导航栏还是需要研究一下</div>
+<div>5、在一个workspace下，如果一个项目多个静态库，那么暴露头文件的方法、方式！！！</div>
+<div>6、nil、NSNull、Null以及C语言的空指针</div>
+<div>7、键盘遮盖的问题</div>
+<div>8、autoResizing的使用</div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+<div>Swift的疑问：</div>
+<div>1、NSString与String的区别</div>
+<div>     NSString继承自NSObject；那么String的继承自</div>
+</en-note>
+]]></content><created>20151209T074151Z</created><updated>20151216T014304Z</updated><note-attributes><latitude>39.97550941480939</latitude><longitude>116.4892811616048</longitude><altitude>38.91993713378906</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

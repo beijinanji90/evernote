@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020521Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>事件处理</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>事件处理机制：</div>
+<div>     在ios发生触摸中，事件会加入UIApplication事件队列，UIApplcation会从事件队列取出最前面事件并分发处理，通常先分发给应用程序主窗口，主窗口会调用hitTest:withEvent:，查找合适的事件触发试图</div>
+<div><br/></div>
+<div>运动事件：</div>
+<div>     监听运动事件对于UI控件有个前提就是监听对象必须是第一响应者（对于UIViewController试图控制器和UIApplication没有此要求）。</div>
+<div>     1、如果监听的是一个UI控件，那么-(BOOL)canBecomFirstResponder；方法必须返回的YES</div>
+<div>     2、同时控件显示时在（-(void)viewWilApper:(BOOL)animated）方法中，调用视图控制器的becomeFirstReponder方法</div>
+<div>     3、在视图不显示的时候在（-(void)viewDidDisapper:(BOOL)animated）注销第一响应者身份。</div>
+<div><br/></div>
+<div>注意：虽然UIViewController可以默认可以处理运动事件，在控制器中重写了motionBegin:(UIEventSubtype)motion withEvent:(UIEvent *)event。<span style="color: rgb(234, 49, 15);">但是有一个前提条件是这个控制器必须是显示的时候，否则不被调用</span>。</div>
+<div><br/></div>
+<div>远程控制事件：</div>
+<div>     远程控制事件的三个条件：</div>
+<div>     1、启用远程事件接收（使用[UIApplication sharedApplication] beginReceivingRemoteControlEvents）。这个方法一般写在AppDelegate中的didFinishLaunchingWithOptions方法中。</div>
+<div>     2、对于UI控件同样要求必须是第一响应者（对于试图控制器UIViewController或者应用程序UIApplication对象监听不用）</div>
+<div>     3、应用程序必须是当前音频的控制者，也就是ios7中通知栏中当前音频播放程序必须是我们自己开发程序。</div>
+<div>     4、在UIView或者UIViewController中重写-(void)remoteControlReceivedWithEvent:(UIEvent *)evnet方法，在这个方法中处理远程控制事件</div>
+<div><br/></div>
+<div>    运动事件中，我们有一个枚举类型UIEventSubType，我可以同这个枚举来判断运动类型，还包含了我们远程控制的子事件类型  </div>
+<div>
+<div style="border-color: silver silver silver rgb(108, 226, 108); border-width: 1px 1px 1px 5px; border-style: solid; padding: 8px; font-family: Consolas, 'Courier New', 宋体, Courier, mono, serif; font-size: 12px; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background: rgb(245, 245, 245);"><span style="color: blue;">typedef </span><span style="color: black;">NS_ENUM(NSInteger, UIEventSubtype) {<br/>
+   </span> <span style="color: green;">// 不包含任何子事件类型<br/>
+   </span> <span style="color: black;">UIEventSubtypeNone                              = 0,<br/>
+   <br/>
+   </span> <span style="color: green;">// 摇晃事件（从iOS3.0开始支持此事件）<br/>
+   </span> <span style="color: black;">UIEventSubtypeMotionShake                       = 1,<br/>
+   <br/>
+   </span> <span style="color: green;">//远程控制子事件类型（从iOS4.0开始支持远程控制事件）<br/>
+    //播放事件【操作：停止状态下，按耳机线控中间按钮一下】<br/>
+   </span> <span style="color: black;">UIEventSubtypeRemoteControlPlay                 = 100,<br/>
+   </span> <span style="color: green;">//暂停事件<br/>
+   </span> <span style="color: black;">UIEventSubtypeRemoteControlPause                = 101,<br/>
+   </span> <span style="color: green;">//停止事件<br/>
+   </span> <span style="color: black;">UIEventSubtypeRemoteControlStop                 = 102,<br/>
+   </span> <span style="color: green;">//播放或暂停切换【操作：播放或暂停状态下，按耳机线控中间按钮一下】<br/>
+   </span> <span style="color: black;">UIEventSubtypeRemoteControlTogglePlayPause      = 103,<br/>
+   </span> <span style="color: green;">//下一曲【操作：按耳机线控中间按钮两下】<br/>
+   </span> <span style="color: black;">UIEventSubtypeRemoteControlNextTrack            = 104,<br/>
+   </span> <span style="color: green;">//上一曲【操作：按耳机线控中间按钮三下】<br/>
+   </span> <span style="color: black;">UIEventSubtypeRemoteControlPreviousTrack        = 105,<br/>
+   </span> <span style="color: green;">//快退开始【操作：按耳机线控中间按钮三下不要松开】<br/>
+   </span> <span style="color: black;">UIEventSubtypeRemoteControlBeginSeekingBackward = 106,<br/>
+   </span> <span style="color: green;">//快退停止【操作：按耳机线控中间按钮三下到了快退的位置松开】<br/>
+   </span> <span style="color: black;">UIEventSubtypeRemoteControlEndSeekingBackward   = 107,<br/>
+   </span> <span style="color: green;">//快进开始【操作：按耳机线控中间按钮两下不要松开】<br/>
+   </span> <span style="color: black;">UIEventSubtypeRemoteControlBeginSeekingForward  = 108,<br/>
+   </span> <span style="color: green;">//快进停止【操作：按耳机线控中间按钮两下到了快进的位置松开】<br/>
+   </span> <span style="color: black;">UIEventSubtypeRemoteControlEndSeekingForward    = 109,<br/>
+};</span></div>
+</div>
+</en-note>
+]]></content><created>20150716T070659Z</created><updated>20150716T091225Z</updated><note-attributes><latitude>39.97555413931034</latitude><longitude>116.4892956417905</longitude><altitude>40.9306526184082</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

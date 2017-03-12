@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020237Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>iphone唯一标识符</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>1、CFUUID</div>
+<div>          ios2.0开始，CoreFoundation包的一部分，API属于C语言风格；</div>
+<div>          CFUUIDRef cfuuid = CFUUIDCreate(kCFAllocatorDefault);</div>
+<div>          NSString *cfuuidString = (NSString *)CFBridgingRelease(<span style="color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; float: none;">(CFUUIDCreateString(kCFAllocatorDefault, cfuuid));</span></div>
+<div><span style="color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; float: none;">         获得的这个CFUUID值系统并没有存储。每次调用CFUUIDCreate，系统都会返回一个新的唯一标示符。如果你希望存储这个标示符，那么需要自己将其存储到NSUserDefaults, Keychain, Pasteboard或其它地方。</span></div>
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><br/></span></span></div>
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;">2、NSUUID</span></span></div>
+<div><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><span style="font-size: 13px;">     <a style="color: rgb(7, 93, 179); text-decoration: underline;" target="_blank" href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSUUID_Class/Reference/Reference.html"><em><strong>NSUUID</strong></em></a>在iOS 6中才出现，这跟CFUUID几乎完全一样，只不过它是Objective-C接口。+ (id)UUID 是一个类方法，调用该方法可以获得一个UUID。通过下面的代码可以获得一个UUID字符串：</span></span></div>
+<div>
+<div style="text-indent: 0px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><span style="font-size: 13px;">     NSString *uuid = [[NSUUID UUID] UUIDString];</span></span></div>
+<div><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><span style="font-size: 13px;">     跟CFUUID一样，这个值系统也不会存储，每次调用的时候都会获得一个新的唯一标示符。如果要存储的话，你需要自己存储。在我读取NSUUID时，注意到获取到的这个值跟CFUUID完全一样（不过也可能不一样）：</span></span></div>
+<div>
+<div style="text-indent: 0px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;">     示例: 68753A44-4D6F-1226-9C60-0050E4C00067</span></span></div>
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><br/></span></span></div>
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;">3、</span></span><strong style="color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">广告标示符（IDFA-identifierForIdentifier）</strong></div>
+<div><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><span style="font-size: 13px;"><b>     </b>这是iOS 6中另外一个新的方法，<a style="color: rgb(7, 93, 179); text-decoration: underline;" target="_blank"><em><strong>advertisingIdentifier</strong></em></a>是新框架AdSupport.framework的一部分。ASIdentifierManager单例提供了一个方法advertisingIdentifier，通过调用该方法会返回一个上面提到的NSUUID实例。</span></span></div>
+<div>
+<div style="text-indent: 0px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;">     NSString *adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];</span></span></div>
+<div><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><span style="font-size: 13px;">     跟CFUUID和NSUUID不一样，广告标示符是由系统存储着的。不过即使这是由系统存储的，但是有几种情况下，会重新生成广告标示符。如果用户完全重置系统（(设置程序 -&gt; 通用 -&gt; 还原 -&gt; 还原位置与隐私) ，这个广告标示符会重新生成。另外如果用户明确的还原广告(设置程序-&gt; 通用 -&gt; 关于本机 -&gt; 广告 -&gt; 还原广告标示符) ，那么广告标示符也会重新生成。关于广告标示符的还原，有一点需要注意：如果程序在后台运行，此时用户“还原广告标示符”，然后再回到程序中，此时获取广告标示符并不会立即获得还原后的标示符。必须要终止程序，然后再重新启动程序，才能获得还原后的广告标示符。之所以会这样，我猜测是由于ASIdentifierManager是一个单例。</span></span></div>
+<div>
+<div style="text-indent: 0px; color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div>     针对广告标示符用户有一个可控的开关“限制广告跟踪”。<a style="color: rgb(7, 93, 179); text-decoration: underline;" target="_blank" href="http://www.doubleencore.com/2013/04/what-apples-limit-ad-tracking-feature-actually-means-to-users/"><em><strong>Nick Arnott的文章中</strong></em></a>已经指出了。将这个开关打开，实际上什么也没有做，不过这是希望限制你访问广告标示符。这个开关是一个简单的boolean标志，当将广告标示符发到任意的服务器端时，你最好判断一下这个值，然后再做决定。</div>
+</div>
+<div style="text-indent: 0px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;">     示例: 1E2DFA89-496A-47FD-9941-DF1FC4E6484A</span></span></div>
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><br/></span></span></div>
+<div><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><span style="font-size: 13px;">4、<strong>Vindor标示符 (IDFV-identifierForVendor)</strong></span></span></div>
+<div>
+<div style="text-indent: 0px; color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div>     这种叫法也是在iOS 6中新增的，不过获取这个IDFV的新方法被添加在已有的UIDevice类中。跟advertisingIdentifier一样，该方法返回的是一个NSUUID对象。</div>
+</div>
+<div style="text-indent: 0px; color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div>     NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];</div>
+</div>
+<div style="text-indent: 0px; color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div>     苹果官方的文档中对identifierForVendor有如下这样的一段描述 ：</div>
+</div>
+<div style="text-indent: 0px; color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div>     如果满足这样的条件，那么获取到的这个属性值就不会变：相同的一个程序里面-相同的vindor-相同的设备。如果是这样的情况，那么这个值是不会相同的：相同的程序-相同的设备-不同的vindor，或者是相同的程序-不同的设备-无论是否相同的vindor。</div>
+</div>
+<div style="text-indent: 0px; color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div>      看完上面的内容，我有这样的一个疑问“vendor是什么”。我首先想到的是苹果开发者账号。但事实证明这是错误的。接着我想可能是有一个AppIdentifierPrefix东西，跟钥匙串访问一样，可以在多个程序间共享。同样，这个想法也是的。最后证明，vendor非常简单：一个Vendor是CFBundleIdentifier（反转DNS格式）的前两部分。例如，com.doubleencore.app1 和 com.doubleencore.app2 得到的identifierForVendor是相同的，因为它们的CFBundleIdentifier 前两部分是相同的。不过这样获得的identifierForVendor则完全不同：com.massivelyoverrated 或 net.doubleencore。</div>
+</div>
+<div style="text-indent: 0px; color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div>      在这里，还需要注意的一点就是：如果用户卸载了同一个vendor对应的所有程序，然后在重新安装同一个vendor提供的程序，此时identifierForVendor会被重置。</div>
+</div>
+<div style="text-indent: 0px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;">     示例: 599F9C00-92DC-4B5C-9464-7971F01F8370</span></span></div>
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><br/></span></span></div>
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;">5、</span></span><strong style="color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">UDID</strong></div>
+<div><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><span style="font-size: 13px;">     在之前的版本中是可用的，但是在iOS5以及之后的版本中，以及被弃用了。虽然，这个UDID用得很广泛，但是，不得不说的是，它在慢慢的远离开发者，不能在考虑使用UDID了。至于这个标示符是转为私有方法，或者完全从以后的iOS版本中移除，还有待观察。不过，这个UDID在部署企业级签名程序时，非常方便。获取UDID的方法如下：</span></span></div>
+<div><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><span style="font-size: 13px;">     NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];</span></span></div>
+<div>
+<div style="text-indent: 0px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;">     示例: bb4d786633053a0b9c0da20d54ea7e38e8776da4</span></span></div>
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><br/></span></span></div>
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;">6、</span></span><strong style="color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">OpenUDID</strong></div>
+<div><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><span style="font-size: 13px;"><b>     </b>在iOS 5发布时，uniqueIdentifier被弃用了，这引起了广大开发者需要寻找一个可以替代UDID，并且不受苹果控制的方案。由此<a style="color: rgb(7, 93, 179); text-decoration: underline;" target="_blank" href="https://github.com/ylechelle/OpenUDID"><em><strong>OpenUDID</strong></em></a>成为了当时使用最广泛的开源UDID替代方案。OpenUDID在工程中实现起来非常简单，并且还支持一系列的广告提供商。</span></span></div>
+<div><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><span style="font-size: 13px;">     NSString *openUDID = [OpenUDID value];</span></span></div>
+<div>
+<div style="text-indent: 0px; color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div>     OpenUDID利用了一个非常巧妙的方法在不同程序间存储标示符 — 在粘贴板中用了一个特殊的名称来存储标示符。通过这种方法，别的程序（同样使用了OpenUDID）知道去什么地方获取已经生成的标示符（而不用再生成一个新的）。</div>
+</div>
+<div style="text-indent: 0px; color: rgb(0, 0, 0); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div>     之前已经提到过，在将来，苹果将开始强制使用advertisingIdentifier 或identifierForVendor。如果这一天到来的话，即使OpenUDID看起来是非常不错的选择，但是你可能不得不过渡到苹果推出的方法。</div>
+</div>
+<div style="text-indent: 0px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;">      示例: 0d943976b24c85900c764dd9f75ce054dc5986ff</span></span></div>
+<div><span style="font-size: 13px;"><span style="font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;"><br/></span></span></div>
+<div>
+<ul style="box-sizing: border-box; padding: 0px 3em; list-style-type: none; color: rgb(51, 51, 51); font-family: BodyFontFamily, 'Georgia Pro', Georgia, Times; font-size: 20px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 247, 245);">
+<li style="box-sizing: border-box; list-style: disc;"><strong style="box-sizing: border-box;">UUID <em style="box-sizing: border-box;">（通用唯一标识符）</em></strong>：一个 128 位的序列，可以保证跨时间和空间的唯一性，由<a style="box-sizing: border-box; transition: color 0.1s linear; color: rgb(255, 128, 0) !important; text-decoration: none;" href="http://www.ietf.org/rfc/rfc4122.txt">RFC4122</a> 定义。</li>
+<li style="box-sizing: border-box; list-style: disc;"><strong style="box-sizing: border-box;">GUID <em style="box-sizing: border-box;">（全局唯一标识符）</em></strong>：微软实现的 UUID 规范；经常与 UUID 互换使用。</li>
+<li style="box-sizing: border-box; list-style: disc;"><strong style="box-sizing: border-box;">UDID <em style="box-sizing: border-box;">（设备唯一标识符）</em></strong>：40 个十六进制字符，用来唯一标识 iOS 设备（可当做该设备的<a style="box-sizing: border-box; transition: color 0.1s linear; color: rgb(255, 128, 0) !important; text-decoration: none;" href="https://zh.wikipedia.org/wiki/%E7%A4%BE%E6%9C%83%E5%AE%89%E5%85%A8%E8%99%9F%E7%A2%BC">社会安全码</a>）。这个值可以<a style="box-sizing: border-box; transition: color 0.1s linear; color: rgb(255, 128, 0) !important; text-decoration: none;" href="http://whatsmyudid.com/">从 iTunes 得到</a>，或使用 <code style="box-sizing: border-box; font-family: Courier, Monaco, monospace; font-size: 17px;">UIDevice -uniqueIdentifier</code>得到类似 <a style="box-sizing: border-box; transition: color 0.1s linear; color: rgb(255, 128, 0) !important; text-decoration: none;" href="http://en.wikipedia.org/wiki/MAC_address">MAC 地址</a> 这样的硬件详细信息。</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</en-note>
+]]></content><created>20160303T030727Z</created><updated>20160303T032444Z</updated><note-attributes><latitude>39.97550833756991</latitude><longitude>116.4892172740965</longitude><altitude>35.82670593261719</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

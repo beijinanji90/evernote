@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020302Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>ContentOffset</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<table cellspacing="0" style="word-wrap: break-word; empty-cells: show; border-collapse: collapse; table-layout: fixed; color: rgb(68, 68, 68); font-family: 'Microsoft Yahei', Simsun, Tahoma; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);width:635px;" cellpadding="0" border="0">
+<tr style="word-wrap: break-word;">
+<td style="word-wrap: break-word; font-size: 14px;width:100%;">
+<div style="word-wrap: break-word; font-size: 14px;"><br/>
+1、文档上是：The point at which the origin of the content view is offset from the origin of the scroll view.
+<div>这个偏移量跟坐标别弄混淆了，从左上角（0，0）开始，往下y坐标是正值，而偏移量则是0-y</div>
+<div><br/></div>
+<div>2、scrollView.subView.lastObject是一个UIImageView，这个UIImageView相当于UIScrollView的滚动条。通过滚动条可以设计出别样的滚动条样式。</div>
+</div>
+</td>
+</tr>
+</table>
+</en-note>
+]]></content><created>20150730T103607Z</created><updated>20160214T093200Z</updated><note-attributes><latitude>39.97556056719625</latitude><longitude>116.4892314814672</longitude><altitude>40.37128829956055</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020204Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>Jenkins</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>1、查看Jenkins信息</div>
+<div><br/></div>
+<div><a href="http://blog.fir.im/jenkins/"/><a href="http://blog.fir.im/jenkins/"/><a href="http://blog.fir.im/jenkins/">http://blog.fir.im/jenkins/</a></div>
+<div><br/></div>
+<div>
+<p style="padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><strong style=" padding: 0px;">2、升级Jenkins</strong></p>
+<p style="padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">Jenkins的开发迭代非常快，每周发布一个开发版本，长期支持版每半年更新一次(ps:大版本更新)。如此频繁的更新，怎么升级呢？</p>
+<p style="padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">war：下载新版的war文件，替换旧版本war文件。重启即可。<br style=" padding: 0px;"/>
+二进制：卸载旧版本，安装新版本即可。<br style=" padding: 0px;"/>
+Jenkins程序下载地址：http://mirrors.<a href="http://jenkins-ci.org/">jenkins-ci.org/</a></p>
+<p style=" padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">note：<span style="padding: 0px; color: rgb(255, 0, 0);">升级前，请测试该版本和你本地数据的兼容性。如何测试：将JENKINS_HOME拷贝一份到新的机器，用新版的程序启动。测试对应的插件和配置。</span></p>
+</div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: verdana, Arial, Helvetica, sans-serif;">3、<strong style=" padding: 0px;">移动，删除或修改jobs</strong></span></span></div>
+<div>
+<p style=" padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">对于移动或删除jobs，只需要简单地移动或删除%JENKINS_HOEM%\jobs目录。</p>
+<p style=" padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">对于修改jobs的名字，只需要简单地修改%JENKINS_HOEM%\jobs下对应job的文件夹的名字。</p>
+</div>
+<div><br/></div>
+<div>
+<div style=" padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div>对于不经常使用的job，只需要对%JENKINS_HOEM%\jobs下对应的jobs的目录zip或tar后存储到其他的地方。</div>
+</div>
+</div>
+<div><br/></div>
+<div>
+<p style=" padding: 0px; text-indent: 0px; color: rgb(51, 51, 51); font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">4、<strong style=" padding: 0px;">Jenkins 启动时的命令行参数 </strong></p>
+<div style=" padding: 0px; color: rgb(51, 51, 51); font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">--httpPort=$HTTP_PORT，用来设置jenkins运行时的web端口。</div>
+<div style=" padding: 0px; color: rgb(51, 51, 51); font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">--httpsPort=$HTTP_PORT，表示使用https协议。</div>
+<div style=" padding: 0px; color: rgb(51, 51, 51); font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+<div>--httpListenAddress=$HTTP_HOST，用来指定jenkins监听的ip范围，默认为所有的ip都可以访问此jenkins server。</div>
+</div>
+</div>
+<div><br/></div>
+<div>
+<div style="padding: 5px; border: 1px dotted rgb(170, 170, 170); font-style: normal; font-variant-ligatures: normal; font-variant-position: normal; font-variant-caps: normal; font-variant-numeric: normal; font-variant-alternates: normal; font-variant-east-asian: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(246, 246, 246);">
+<div><span style="color: rgb(63, 63, 63);"><span style="font-size: 12px;"><span style="font-family: 'Microsoft YaHei';">defaults read /Library/Preferences/org.jenkins-ci</span></span></span></div>
+<div><span style="color: rgb(63, 63, 63);"><span style="font-size: 12px;"><span style="font-family: 'Microsoft YaHei';"><br/></span></span></span></div>
+<div><span style="color: rgb(63, 63, 63); font-family: 'Microsoft YaHei'; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; float: none; background-color: rgb(255, 255, 255);">2、设置默认端口</span></div>
+<div>
+<div style="padding: 5px; border: 1px dotted rgb(170, 170, 170); font-style: normal; font-variant-ligatures: normal; font-variant-position: normal; font-variant-caps: normal; font-variant-numeric: normal; font-variant-alternates: normal; font-variant-east-asian: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(246, 246, 246);">
+<div><span style="color: rgb(63, 63, 63);"><span style="font-size: 12px;"><span style="font-family: 'Microsoft YaHei';"> sudo defaults write /Library/Preferences/org.jenkins-ci httpPort ‘9999‘</span></span></span></div>
+<div><span style="color: rgb(63, 63, 63);"><span style="font-size: 12px;"><span style="font-family: 'Microsoft YaHei';"><br/></span></span></span></div>
+<div><span style="color: rgb(63, 63, 63);"><span style="font-size: 12px;"><span style="font-family: 'Microsoft YaHei';">3、自启动</span></span></span></div>
+<div>
+<div style="padding: 5px; border: 1px dotted rgb(170, 170, 170); font-style: normal; font-variant-ligatures: normal; font-variant-position: normal; font-variant-caps: normal; font-variant-numeric: normal; font-variant-alternates: normal; font-variant-east-asian: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(246, 246, 246);">
+<div><span style="color: rgb(63, 63, 63);"><span style="font-size: 12px;"><span style="font-family: 'Microsoft YaHei';">sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist</span></span></span></div>
+<div><span style="color: rgb(63, 63, 63);"><span style="font-size: 12px;"><span style="font-family: 'Microsoft YaHei';"><br/></span></span></span></div>
+<div><span style="color: rgb(63, 63, 63);"><span style="font-size: 12px;"><span style="font-family: 'Microsoft YaHei';">4、取消自启动</span></span></span></div>
+<div>
+<div style="font-family: 'Microsoft YaHei'; padding: 5px; border: 1px dotted rgb(170, 170, 170); color: rgb(63, 63, 63); font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(246, 246, 246);">sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist<br/></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</en-note>
+]]></content><created>20160429T074206Z</created><updated>20160503T060827Z</updated><note-attributes><latitude>39.97560346007401</latitude><longitude>116.48921847193</longitude><altitude>41.83337783813477</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

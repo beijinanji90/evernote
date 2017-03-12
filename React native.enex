@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020141Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>React native</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div><a href="https://zhuanlan.zhihu.com/p/19996445"/><a href="https://zhuanlan.zhihu.com/p/19996445">https://zhuanlan.zhihu.com/p/19996445</a></div>
+<div><a href="http://reactnative.cn/docs/0.27/text.html#content"/><a href="http://reactnative.cn/docs/0.27/text.html#content">http://reactnative.cn/docs/0.27/text.html#content</a></div>
+<div><a href="http://www.jianshu.com/p/fbf4d8e7d2d8">http://www.jianshu.com/p/fbf4d8e7d2d8</a></div>
+<div><br/></div>
+<div>1、初始化一个React Native的工程</div>
+<div>     react-native init HelloWorld</div>
+</en-note>
+]]></content><created>20160625T110413Z</created><updated>20160629T154134Z</updated><note-attributes><latitude>40.03090461999999</latitude><longitude>116.53525461</longitude><altitude>50</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE en-export SYSTEM "http://xml.evernote.com/pub/evernote-export3.dtd">
+<en-export export-date="20170312T020324Z" application="Evernote" version="Evernote Mac 6.9 (453991)">
+<note><title>RunLoop</title><content><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+<en-note>
+<div>1、runLoop的5个Mode:</div>
+<div>     KCFRunLoopDefaultMode:App的默认Mode，通常主线程是Mode下运行</div>
+<div>     UITrackingRunLoopMode:界面跟踪Mode，用于ScrollVIew追踪触摸滑动，保证界面滑动时不受其他Mode影响</div>
+<div>     UIInitializationRunLoopMode:在刚启动App时第一次进入的第一个Mode，启动完成后就不再使用</div>
+<div>     GSEventReceiveRunLoopModel:接受系统时间的内部Mode，通常用不到</div>
+<div>     KCFRunLoopCommonModes:这是一个占位Mode，没有实际作用</div>
+</en-note>
+]]></content><created>20160118T021544Z</created><updated>20160119T084432Z</updated><note-attributes><latitude>39.97545481269572</latitude><longitude>116.4891910802832</longitude><altitude>34.9493408203125</altitude><author>344963245@qq.com</author><source>desktop.mac</source><reminder-order>0</reminder-order></note-attributes></note>
+</en-export>
